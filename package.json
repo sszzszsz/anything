@@ -1,0 +1,29 @@
+{
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "gulp": "gulp"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.24.6",
+    "connect-ssi": "^1.1.1",
+    "gulp-cached": "^1.1.1",
+    "gulp-convert-encoding": "^2.0.1",
+    "gulp-cr-lf-replace": "0.0.4",
+    "gulp-imagemin": "^4.1.0",
+    "gulp-imageoptim": "^1.0.9",
+    "gulp-notify": "^3.2.0",
+    "gulp-pleeease": "^2.0.2",
+    "gulp-plumber": "^1.2.0",
+    "gulp-sass": "^4.0.1",
+    "gulp-uglify": "^3.0.1",
+    "gulp-watch": "^5.0.1",
+    "imagemin-mozjpeg": "^7.0.0",
+    "imagemin-pngquant": "^6.0.0"
+  },
+  "dependencies": {
+    "gulp": "^4.0.2",
+    "gulp-eslint": "^5.0.0",
+    "gulp-htmlhint": "^2.2.1"
+  }
+}

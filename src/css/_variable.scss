@@ -1,0 +1,43 @@
+//font
+$fontFamilyDefault : "Yu Gothic", 游ゴシック, YuGothic, 游ゴシック体, "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3", メイリオ, sans-serif;
+$fontSizeDefault : 1.6rem;
+$fontWeightDefault : 500;
+$fontColorDefault : #000;
+$linkColorDefault : #333;
+
+//color
+$mainColor: #ddd;
+$subColor: #ddd;
+
+@mixin PCwidth {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+//@include PCwidth();
+
+@mixin SPwidth {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+//@include SPwidth();
+
+@mixin cf {
+  content:"";
+	clear:both;
+	display:block;
+}
+
+@mixin hover {
+  transition: all 0.2s linear;
+}
+
+$breaKPoint_tb: 1024px;
+$breaKPoint_sp: 768px;
+@mixin breaKPoint_sp {
+  @media screen and (max-width: ($breaKPoint_sp)) {
+    @content;
+  }
+}
+//@include breaKPoint_sp {}

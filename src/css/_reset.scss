@@ -1,0 +1,181 @@
+@charset "utf-8";
+
+/*	Reset
+------------------------------*/
+html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, center, dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,article, aside, canvas, details, embed,figure, figcaption, footer, header, main,menu, nav, output, ruby, section, summary,time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-style: inherit;
+	font-weight: inherit;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+main, article, aside, details, figcaption, figure, footer, header, menu, nav, section {
+  display:block;
+}
+html {
+	color: $fontColorDefault;
+	font-size: 62.5%;
+	font-family: $fontFamilyDefault;
+	font-weight: $fontWeightDefault;
+	overflow-x: hidden;
+}
+body {
+	width: 100%;
+	height: 100%;
+	font-size: $fontSizeDefault;
+	-moz-text-size-adjust: none;
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+	text-size-adjust: 100%;
+	line-height: 1.875;
+	background-color:#fff;
+	word-break: break-word;
+}
+*, *:before, *:after {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+input, input[type=file], textarea, button, select {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	outline: none;
+	margin: 0;
+	padding: 0;
+	border: none;
+  background: none;
+	font: inherit;
+	border-radius: 0;
+	word-break: normal;
+}
+select::-ms-expand {
+  display: none;
+}
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+	color:#a9a9a9;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+ol, ul {
+	list-style: none;
+}
+table {
+	border-collapse:c ollapse;
+	border-spacing: 0;
+	width: 100%;
+}
+caption, th, td {
+	text-align: left;
+}
+a {
+	color: $linkColorDefault;
+	text-decoration: none;
+	outline: none;
+}
+img {
+	font-size: 0;
+	vertical-align: top;
+}
+hr {
+	height: 1px;
+	margin: 0;
+	border: 0;
+}
+.cf:after {
+	@include cf;
+}
+/*	font
+------------------------------*/
+.wb {
+
+}
+/*	Utility
+------------------------------*/
+.dis {
+	&_blo { display:block !important; }
+	&_inl { display:inline !important; }
+	&_inB { display:inline-block !important; }
+	&_non { display:none !important; }
+}
+/*-- Layout --*/
+.al {
+	&_l{text-align: left!important; }
+	&_c{text-align: left!important; }
+	&_r{text-align: left!important; }
+}
+.va {
+	&_t{vertical-align: top!important; }
+	&_m{vertical-align: middle!important; }
+	&_b{vertical-align: bottom!important; }
+}
+/*-- Text --*/
+@for $i from 10 through 20 {
+  .fs#{$i} {
+    font-size:#{$i * 0.1}rem;
+  }
+}
+.fw {
+	&_n{ font-weight: normal!important; }
+	&_b{ font-weight: bold!important; }
+}
+.nowrap { white-space:nowrap !important; }
+.brAll { word-break:break-all !important; }
+
+/*-- Margin & Padding --*/
+@for $i from 0 through 10 {
+  .mt_#{$i * 5} {
+    margin-top:#{$i * 5}px;
+	}
+	.mb_#{$i * 5} {
+    margin-bottom:#{$i * 5}px;
+	}
+	.pt_#{$i * 5} {
+    padding-top:#{$i * 5}px;
+	}
+	.pb_#{$i * 5} {
+    padding-bottom:#{$i * 5}px;
+	}
+}
+//PC and SP
+.pc {
+	display: block!important;
+}
+.sp {
+	display: none!important;
+}
+br {
+	&.pc {
+		display: inline-block!important;
+	}
+	&.sp {
+		display: none!important;
+	}
+}
+@include breaKPoint_sp {
+	body {
+		font-size: 1.4rem;
+	}
+	.pc {
+		display: none!important;
+	}
+	.sp {
+		display: block!important;
+	}
+	br {
+		&.pc {
+			display: none!important;
+		}
+		&.sp {
+			display: inline-block!important;
+		}
+	}
+}
