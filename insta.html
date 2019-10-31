@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  <title>instagram test</title>
+
+  <style>
+    img,
+    video {
+      height: auto;
+      position: absolute;
+      top: 00%;
+      bottom: 0;
+      margin: auto;
+      width: auto;
+      left: 50%;
+      right: 0;
+      min-height: 100%;
+      transform: translate(-50%, 0%);
+          max-width: 100%;
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0;
+      padding: 0;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .gallery-item {
+      flex: 1 1 25%;
+      -ms-flex: 1 1 25%;
+      overflow: hidden;
+      position: relative;
+      padding-bottom: 25%;
+      height: 100%;
+    }
+
+    .gallery-item a {
+      display: block;
+      cursor: pointer;
+      height: 100%;
+      position: absolute;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <ul id="gallery" class="gallery"></ul>
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  axios.get("insta.php").then(instagram_data => {
+    console.log(instagram_data);// 検証ツールのConsoleを覗くと取得したデータの全容が確認できます。
+
+    //
+    //他のInstagramビジネスアカウントの投稿情報も取得したい場合
+
+    // const gallery_data = instagram_data["data"]["business_discovery"]["media"]["data"];
+
+    //
+    //自分のInstagramビジネスアカウントの投稿情報が取得できればOKな場合は
+    //const gallery_dataを下記にする。
+
+    const gallery_data = instagram_data["data"]["media"]["data"];
+
+    let photos = "";
+    const photo_length = 8;
+
+    for (let i = 0; i < photo_length; i++) {
+      let targetUrl = gallery_data[i].media_url
+      let video = targetUrl.match('.mp4')
+      if (video !== null) {
+        photos += '<li class="gallery-item"><a href="' + gallery_data[i].permalink + '" target="_blank"><video src="' + gallery_data[i].media_url + '"></a></li>';
+      } else {
+        photos += '<li class="gallery-item"><a href="' + gallery_data[i].permalink + '" target="_blank"><img src="' + gallery_data[i].media_url + '"></a></li>';
+      }
+
+    }
+    document.querySelector("#gallery").innerHTML = photos;
+  }).catch(error => {
+    console.log(error);
+  })
+</script>
+
+</html>
