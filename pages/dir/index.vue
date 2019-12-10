@@ -8,6 +8,9 @@
         <a href="https://nuxtjs.org/" target="_blank" class="button--green">
           Documentation
         </a>
+        <nuxt-link to="/" class="button--green">
+          top
+        </nuxt-link>
       </div>
     </div>
   </div>

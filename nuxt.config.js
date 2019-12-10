@@ -82,7 +82,21 @@ export default {
    ** globalのscss
    */
   styleResources: {
-    // scss: ['~/assets/scss/mixin.scss']
+    scss: ['~/assets/scss/mixin.scss']
+  },
+  /*
+   ** ページ遷移のアニメーション設定
+   */
+  pageTransition: {
+    name: 'fade-up',
+    mode: 'out-in',
+    beforeEnter(el) {
+      console.log('Before enter...')
+    }
+  },
+  layoutTransition: {
+    name: 'fade-down',
+    mode: 'out-in'
   },
   /*
    ** webfontloader

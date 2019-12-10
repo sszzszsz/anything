@@ -1,0 +1,193 @@
+$red: #bf4040;
+$white: #fff;
+
+
+/* --------------------
+ animation
+-------------------- */
+@mixin keyframes($animation-name: animaton) {
+  @-webkit-keyframes #{$animation-name} {
+    @content;
+  }
+
+  @-moz-keyframes #{$animation-name} {
+    @content;
+  }
+
+  @keyframes #{$animation-name} {
+    @content;
+  }
+}
+
+@mixin animation($animation-name) {
+  -webkit-animation: $animation-name;
+  -moz-animation: $animation-name;
+  animation: $animation-name;
+  -webkit-animation-fill-mode: both;
+  -moz-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+/* --------------------
+ site break points
+-------------------- */
+$tablet: 768px !default;
+$desktop: 1024px !default;
+$widescreen: 1200px !default;
+$fullhd: 1600px !default;
+//@include mobile()
+@mixin mobile {
+  @media screen and (max-width: $tablet - 1px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (max-width: $tablet), print {
+    @content;
+  }
+}
+
+@mixin tablet-only {
+  @media screen and (min-width: $tablet) and (max-width: $desktop - 1px) {
+    @content;
+  }
+}
+
+@mixin touch {
+  @media screen and (max-width: $desktop - 1px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media screen and (min-width: $desktop) {
+    @content;
+  }
+}
+
+@mixin desktop-only {
+  @media screen and (min-width: $desktop) and (max-width: $widescreen - 1px) {
+    @content;
+  }
+}
+
+@mixin widescreen {
+  @media screen and (min-width: $widescreen) {
+    @content;
+  }
+}
+
+@mixin widescreen-only {
+  @media screen and (min-width: $widescreen) and (max-width: $fullhd - 1px) {
+    @content;
+  }
+}
+
+@mixin fullhd {
+  @media screen and (min-width: $fullhd) {
+    @content;
+  }
+}
+
+
+
+.fade {
+  &-leave-active {
+    transition: all 0.8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
+  &-leave-to {
+    opacity: 0;
+  }
+  &-enter {
+    opacity: 0;
+  }
+  &-enter-active {
+    transition: all 0.6s ease;
+  }
+}
+
+.fade-up {
+  &-leave-active {
+    transition: all 0.5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
+  &-leave-to {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  &-enter {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  &-enter-active {
+    transition: all 0.6s ease;
+  }
+}
+
+.fade-down {
+  &-leave-active {
+    transition: all 0.5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
+  &-leave-to {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  &-enter {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  &-enter-active {
+    transition: all 0.5s ease;
+  }
+}
+
+.fade-right {
+  &-leave-active {
+    transition: all 0.8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
+  &-leave-to {
+    transform: translateX(-10px);
+    opacity: 0;
+  }
+  &-enter {
+    transform: translateX(10px);
+    opacity: 0;
+  }
+  &-enter-active {
+    transition: all 0.6s ease;
+  }
+}
+
+.fade-left {
+  &-leave-active {
+    transition: all 0.8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
+  &-leave-to {
+    transform: translateX(10px);
+    opacity: 0;
+  }
+  &-enter {
+    transform: translateX(-10px);
+    opacity: 0;
+  }
+  &-enter-active {
+    transition: all 0.6s ease;
+  }
+}
+
+.zoom-in {
+  &-leave-active {
+    transition: all 0.8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
+  &-leave-to {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  &-enter {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  &-enter-active {
+    transition: all 0.6s ease;
+  }
+}
