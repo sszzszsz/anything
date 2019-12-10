@@ -1,12 +1,11 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
-var watch = require('gulp-watch');
 var plumber = require('gulp-plumber'); //強制停止を防止
 var notify = require('gulp-notify'); //通知を表示
 var browserSync = require('browser-sync'); //ブラウザシンク
 var ssi = require('connect-ssi'); //ssi
-var crLfReplace = require('gulp-cr-lf-replace');
-var convertEncoding = require('gulp-convert-encoding');
+var crLfReplace = require('gulp-cr-lf-replace'); // 改行コードを統一する
+var convertEncoding = require('gulp-convert-encoding'); // 文字コード変更
 var pleeease = require('gulp-pleeease');
 var cache = require('gulp-cached');
 var jsmin = require('gulp-uglify');
