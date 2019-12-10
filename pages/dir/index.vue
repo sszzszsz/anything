@@ -1,33 +1,36 @@
 <template>
   <div class="container">
     <div>
-      <logo />
       <h1 class="title">
-        yarn
+        dir
       </h1>
-      <h2 class="subtitle">
-        My extraordinary Nuxt.js project
-      </h2>
       <div class="links">
-        <nuxt-link to="/dir/" class="button--green">
-          dir
-        </nuxt-link>
+        <a href="https://nuxtjs.org/" target="_blank" class="button--green">
+          Documentation
+        </a>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import Vue from 'vue'
 
-export default {
-  components: {
-    Logo
-  }
-}
+export default Vue.extend({
+  head() {
+    return {
+      title: 'dir'
+    }
+  },
+  data() {
+    return {}
+  },
+  mounted() {},
+  methods: {}
+})
 </script>
 
-<style>
+<style lang="scss" scoped>
 .container {
   margin: 0 auto;
   min-height: 100vh;
