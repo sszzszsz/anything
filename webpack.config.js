@@ -17,10 +17,8 @@ const distHtml = path.join(dist, "html")
 const distCss = path.join(dist, "scss")
 
 const documents = globule.find('./src/html/**/*.pug', { ignore: ['./src/html/inc/*.pug'] })
-console.log('documents',documents)
 const htmlPluginConfig = documents.map(filename => {
 	const template = filename.replace('./src/html/', '')
-	console.log(template)
 	return new HtmlWebpackPlugin({
 		filename: filename.replace('./src/html/', '').replace('.pug', '.html'),
 		template: `${filename}`
@@ -31,9 +29,9 @@ module.exports = {
 	mode: ENV,
 	entry: './src/index.js', // メインとなるJavaScriptファイル（エントリーポイント）
 	output: {
-		path: path.join(__dirname, "dist"), // 出力ファイルのディレクトリ名
+		path: path.join(__dirname, 'dist'), // 出力ファイルのディレクトリ名
 		filename: 'bundle.js', // 出力ファイル名
-		publicPath: "", //ブラウザからバンドルにアクセスする際のパス
+		publicPath: '', //ブラウザからバンドルにアクセスする際のパス
 	},
 	devtool: 'inline-source-map',//ブラウザでのデバッグ用にソースマップを出力する
 	module: {
@@ -113,30 +111,9 @@ module.exports = {
 	devServer: {
 		open: true, // サーバー起動時に自動的にブラウザを開く
 		openPage: "index.html", //サーバー起動時に開くページ
+		contentBase: path.join(__dirname, 'src'),// HTML等コンテンツのルートディレクトリ
 		watchContentBase: true,//コンテンツの変更監視をする
 		contentBase: dist, // HTML等コンテンツのルートディレクトリ
 		port: 3000, // ポート番号
 	}
 };
-
-// const documents = globule.find('./src/html/**/*.pug', { ignore: ['./src/html/inc/*.pug'] })
-// function getPageListData() {
-// 	let _data = {};
-// 	if (pagelist.data) {
-// 		for (let i = 0; i < pagelist.data.length; i++) {
-// 			_data[pagelist.data[i]['name']] = pagelist.data[i];
-// 		}
-// 	}
-// 	return _data;
-// }
-// documents.forEach((document) => {
-// 	const fileName = document.replace('./src/html/', '').replace('.pug', '.html')
-// 	app.plugins.push(
-// 		new HtmlWebpackPlugin({
-// 			filename: `${fileName}`,
-// 			template: document,
-// 		})
-// 	)
-// })
-
-// module.exports = app
