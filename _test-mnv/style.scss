@@ -1,0 +1,308 @@
+html,
+body,
+div,
+span,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+abbr,
+address,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+samp,
+small,
+strong,
+sub,
+sup,
+var,
+b,
+i,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+
+body {
+	line-height: 1;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+	display: block;
+}
+
+nav ul {
+	list-style: none;
+}
+
+blockquote,
+q {
+	quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+	content: '';
+	content: none;
+}
+
+a {
+	margin: 0;
+	padding: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+
+/* change colours to suit your needs */
+ins {
+	background-color: #ff9;
+	color: #000;
+	text-decoration: none;
+}
+
+/* change colours to suit your needs */
+mark {
+	background-color: #ff9;
+	color: #000;
+	font-style: italic;
+	font-weight: bold;
+}
+
+del {
+	text-decoration: line-through;
+}
+
+abbr[title],
+dfn[title] {
+	border-bottom: 1px dotted;
+	cursor: help;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* change border colour to suit your needs */
+hr {
+	display: block;
+	height: 1px;
+	border: 0;
+	border-top: 1px solid #cccccc;
+	margin: 1em 0;
+	padding: 0;
+}
+
+input,
+select {
+	vertical-align: middle;
+}
+
+/*----------------------------------
+ここから
+----------------------------------*/
+body {
+	margin: 0;
+	font-family: 'Noto Sans JP', sans-serif;
+}
+.wrap {
+	position: relative;
+}
+.gNav {
+	position: fixed;
+	width: 100%;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 2;
+	background: rgba(0, 0, 0, 0.5);
+
+	&.is_active {
+		display: block;
+	}
+	&__btn {
+		display: block;
+		width: 60px;
+		height: 60px;
+		border-radius: 50%;
+		background: #fff;
+		position: fixed;
+		top: 10px;
+		right: 10px;
+		z-index: 3;
+		box-shadow: none;
+		border: none;
+		font-size: inherit;
+		font-family: inherit;
+		text-align: center;
+		padding: 0;
+		-webkit-appearance: none;
+		transition: background-color 0.2s;
+		transition-delay: 0.2s;
+
+		&.is_active {
+			.gNav__btnLine {
+    background: #fff;
+   }
+   .gNav__btnInr {
+    &:after {
+     transform: translateY(0%);
+    }
+   }
+		}
+	}
+
+	&__btnInr {
+		position: relative;
+		height: 100%;
+		z-index: 4;
+		overflow: hidden;
+
+		&:after {
+			content: '';
+			display: block;
+			width: 60px;
+			height: 60px;
+			border-radius: 50%;
+			background: #000;
+   position: absolute;
+   top: 0;
+   right: 0;
+			z-index: 3;
+			transform: translateY(-100%);
+   transition: transform 0.2s;
+   transition-delay: 0.3s;
+  }
+	}
+	&__btnLine {
+		display: inline-block;
+		width: 50%;
+		height: 2px;
+		border-radius: 2px;
+		background: #000;
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		margin: auto;
+		z-index: 4;
+
+		&--top {
+			transform: translateY(-10px);
+		}
+
+		&--bt {
+			transform: translateY(10px);
+		}
+	}
+
+	&__list {
+		a {
+			display: inline-block;
+			padding: 1em;
+			color: #fff;
+			text-decoration: none;
+		}
+	}
+}
+
+.main {
+	position: relative;
+	section {
+		min-height: 100vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+}
+
+#link1,
+#link3 {
+	background: #eee;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+	transition: transform 0.5s;
+}
+.slide-enter {
+	transform: translateY(-100%);
+}
+
+.slide-enter-to {
+	transform: translateY(0%);
+}
+.slide-leave {
+	transform: translateY(0%);
+}
+.slide-leave-to {
+	transform: translateY(-100%);
+}
