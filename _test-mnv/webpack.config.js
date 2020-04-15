@@ -4,7 +4,7 @@ const globule = require('globule')
 // CSSを別ファイルにするプラグイン
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // CSSをバンドルするときに出力される空のJSをなくすプラグイン
-const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
+const FixStyleOnlyEntriesPlugin = require('webpack-fix-style-only-entries')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 // 公開フォルダ・作業フォルダのディレクトリ指定
