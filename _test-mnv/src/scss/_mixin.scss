@@ -1,0 +1,32 @@
+$pcWidth: 1000px;
+$spWidth: 640px;
+
+@function pcvw($num, $width: $pcWidth) {
+  @return (1vw * $num / $width * 100);
+}
+
+@function spvw($num, $width: $spWidth) {
+  @return (1vw * $num / $width * 100);
+}
+
+@function pcfz($size, $viewport: $pcWidth) {
+  $rate: 100 / $viewport;
+  @return $rate * $size * 1vw;
+}
+@function spfz($size, $viewport: $spWidth) {
+  $rate: 100 / $viewport;
+  @return $rate * $size * 1vw;
+}
+@mixin fontDin {
+  font-family: din-2014, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+@mixin fontNotosansB {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 700;
+}
+@mixin fontNotosansR {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 400;
+}

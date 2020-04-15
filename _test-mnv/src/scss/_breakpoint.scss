@@ -1,0 +1,21 @@
+$pcSize: 1280px;
+$tbSize: 920px;
+$spSize: 768px;
+
+@mixin screenSp {
+	@media screen and (max-width: $spSize - 1) {
+		@content;
+	}
+}
+
+@mixin screenTb {
+	@media screen and (max-width: $tbSize) {
+		@content;
+	}
+}
+
+@mixin screenPc {
+	@media screen and (min-width: $spSize) {
+		@content;
+	}
+}

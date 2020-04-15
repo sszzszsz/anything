@@ -1,0 +1,27 @@
+{
+  "home":{
+    "path": "/index.html",
+    "local_url": "/",
+    "title": "top",
+    "page_title": "Mirai Nihon Ventures",
+    "description": "未来を日本から生み出す。それが私たちの信念。「日本発、世界初」のイノベーションを起こす事業に、私たちは投資します。",
+    "favicon": "favicon",
+    "ogpImg": "https://mirai-nihon-ventures.co.jp/assets/img/ogp.png"
+  },
+  "policy":{
+    "path": "/policy/index.html",
+    "local_url": "policy/index.html",
+    "title": "policy",
+    "page_title": "Privacy Policy",
+    "description": "未来を日本から生み出す。それが私たちの信念。「日本発、世界初」のイノベーションを起こす事業に、私たちは投資します。",
+    "ogpImg": "https://mirai-nihon-ventures.co.jp/assets/img/ogp.png"
+  },
+  "terms":{
+    "path": "/terms/index.html",
+    "local_url": "terms/index.html",
+    "title": "terms",
+    "page_title": "利用規約",
+    "description": "未来を日本から生み出す。それが私たちの信念。「日本発、世界初」のイノベーションを起こす事業に、私たちは投資します。",
+    "ogpImg": "https://mirai-nihon-ventures.co.jp/assets/img/ogp.png"
+  }
+}

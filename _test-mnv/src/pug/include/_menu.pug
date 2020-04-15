@@ -1,0 +1,37 @@
+
+button#gNav__btn.gNav__btn(
+  v-on:click="toggleGnviFlag"
+  v-bind:class="{ is_active: gNaviFlag }"
+  )
+  p.gNav__btnInr
+    span.gNav__btnLine.gNav__btnLine--top
+    span.gNav__btnLine.gNav__btnLine--md
+    span.gNav__btnLine.gNav__btnLine--bt
+
+transition(name="slide")
+  nav.gNav(v-if="gNaviFlag")
+    .gNav__inr
+      .gNav__img
+
+      .gNav__link
+        ul.gNav__list
+          li.gNav__listItem
+            a(href="/index.html#vision" v-on:click="scrLink('#vision')") VISION
+          li.gNav__listItem
+            a(href="/index.html#policy" v-on:click="scrLink('#policy')") Investment Policy
+          li.gNav__listItem
+            a(href="/index.html#team" v-on:click="scrLink('#team')") Team
+          li.gNav__listItem
+            a(href="/index.html#offer" v-on:click="scrLink('#offer')") Offer
+          li.gNav__listItem
+            a(href="/index.html#partners" v-on:click="scrLink('#partners')") Partners
+          li.gNav__listItem
+            a(href="/index.html#info" v-on:click="scrLink('#info')") Company
+
+          li.gNav__listItem.gNav__listItem--sub
+            a(href="/policy/") Privacy Policy
+            a(href="/terms/") 利用規約
+
+        p.btn.btn--bk
+          a.btn__inr(href="mailto:info@mirai-nihon-ventures.co.jp")
+            span.btn__txt Countact us
