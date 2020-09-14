@@ -1,0 +1,20 @@
+- var title = htmlWebpackPlugin.options.title
+- var description = htmlWebpackPlugin.options.description
+- var pageURL = htmlWebpackPlugin.options.pageURL
+- var ogpImg = htmlWebpackPlugin.options.ogpImg
+- var pageKey = htmlWebpackPlugin.options.pageKey
+- var domain = ''
+- var favicon = '/favicon.ico'
+- var siteName = 'Mirai Nihon Ventures'
+
+
+meta(charset="UTF-8")
+title #{title}
+meta(name="viewport" content="width=device-width,user-scalable=yes")
+meta(http-equiv="X-UA-Compatible" content="IE=edge")
+meta(name="format-detection" content="telephone=no")
+meta(name="description" content=`${description}`)
+//- CSS
+link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&Noto+Sans+JP:wght@400;700;900&display=swap")
+//- favicon
+link(rel="icon" type="icon" href=favicon)

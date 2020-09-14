@@ -1,0 +1,14 @@
+doctype html
+block vars
+
+html(lang="ja")
+  head
+    include ./include/_head
+
+  body.wrap(class=key)
+    .l_contents(class=key)
+
+      include ./include/_menu
+      main#main.main(ref="main")
+        block contents
+        include ./include/_footer

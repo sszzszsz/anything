@@ -1,0 +1,19 @@
+{
+  "top":{
+    "root_path": "/index.html",
+    "local_path": "/",
+    "pageKey": "top",
+    "page_title": "TOP",
+    "description": "description",
+    "favicon": "favicon",
+    "ogpImg": ""
+  },
+  "terms":{
+    "root_path": "/terms/index.html",
+    "local_path": "/terms/",
+    "pageKey": "terms",
+    "page_title": "利用規約",
+    "description": "description",
+    "ogpImg": ""
+  }
+}

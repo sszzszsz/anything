@@ -1,0 +1,76 @@
+extends _layout.pug
+
+block vars
+  include _config
+  - var key = "top"
+
+block contents
+  .mv
+    .mv-inr
+      h1.mv-ttl Let's Create a website
+
+  section.section
+    .sec-inr
+      h2.sec-ttl 目次
+      ol.toc-list
+        li.toc-item
+          h3.toc-ttl
+            span.toc-itemIcon 1
+            span.toc-itemTxt 基本知識
+          .toc-cont
+            ol.toc-list-sec
+              li.toc-listItme-sec
+                a(href="/").toc-link 1-1 ファイル・ディレクトリ構造について
+              li.toc-listItme-sec
+                a(href="/").toc-link 1-2 パスについて
+              li.toc-listItme-sec
+                a(href="/").toc-link 1-3 ブラウザ・OS
+        li.toc-item
+          h3.toc-ttl
+            span.toc-itemIcon 2
+            span.toc-itemTxt ツールについて
+          .toc-cont
+            ol.toc-list-sec
+              li 2-1 エディター
+              li 2-2 Adobe製品
+              li 2-3 Git・SVN
+        li.toc-item
+          h3.toc-ttl
+            span.toc-itemIcon 3
+            span.toc-itemTxt HTMLについて
+          .toc-cont
+            ol.toc-list-sec
+              li 3-1 HTMLとは
+              li 3-2 HTMLのタグについて
+              li 3-3 タグを書いてみよう
+        li.toc-item
+          h3.toc-ttl
+            span.toc-itemIcon 4
+            span.toc-itemTxt CSSについて
+          .toc-cont
+            ol.toc-list-sec
+              li 4-1 CSSとは
+              li 4-2 CSSの書き方
+              li 4-3 CSSを書いてみよう
+              li 4-4 クラス名のつけ方
+              li 4-5 SASSについて
+              li 4-6 フレームワークの紹介
+        li.toc-item
+          h3.toc-ttl
+            span.toc-itemIcon 5
+            span.toc-itemTxt Javascriptについて
+          .toc-cont
+            ol.toc-list-sec
+              li 5-1 Javascriptとは
+              li 5-2 jQueryについて
+              li 5-3 JSを書いてみよう
+              li 5-4 プラグインとは
+              li 5-5 フレームワークの紹介
+        li.toc-item
+          h3.toc-ttl
+            span.toc-itemIcon 6
+            span.toc-itemTxt 実際にコーディングしてみよう
+          .toc-cont
+            ol.toc-list-sec
+              li 6-1 課題1（ペラ1）
+              li 6-2 課題2（5ページくらい）

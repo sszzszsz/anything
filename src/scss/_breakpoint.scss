@@ -1,0 +1,51 @@
+$pcSize: 1280px;
+$tbSize: 920px;
+$spSize: 768px;
+$spSize-sm: 320px;
+
+@mixin screenSp-sm {
+	@media screen and (max-width: $spSize-sm) {
+		@content;
+	}
+}
+
+@mixin screenSp {
+	@media screen and (max-width: $spSize - 1) {
+		@content;
+	}
+}
+
+@mixin screenTb {
+	@media screen and (max-width: $tbSize) {
+		@content;
+	}
+}
+
+@mixin screenTbOnly {
+	@media screen and (min-width: $spSize) and (max-width: $tbSize) { 
+		@content;
+	}
+}
+
+@mixin screenPc {
+	@media screen and (max-width: $spSize) {
+		@content;
+	}
+}
+@mixin screenPcOnly {
+	@media screen and (min-width: $spSize + 1) { 
+		@content;
+	}
+}
+
+@mixin portrait {
+	@media screen and (orientation: portrait) {
+		@content;
+	}
+}
+
+@mixin landscape {
+	@media screen and (orientation: landscape) {
+		@content;
+	}
+}

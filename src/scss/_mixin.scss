@@ -1,0 +1,45 @@
+
+@mixin fontRoboto {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+}
+@mixin fontNotosansBd {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 900;
+}
+@mixin fontNotosansB {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 700;
+}
+@mixin fontNotosansR {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 400;
+}
+@mixin  clickScale {
+  @keyframes clickScale {
+    0% {
+      transform: scale(1);
+    }
+    10% {
+      transform: scale(1.1);
+    }
+    80% {
+      transform: scale(1.1);
+    }
+    90% {
+      transform: scale(0.9);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+}
+
+@mixin hover {
+  transition: opacity 0.2s linear;
+  @include screenPcOnly {
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "name": "sample",
+  "version": "1.0.0",
+  "scripts": {
+    "server": "webpack-dev-server",
+    "build:dev": "webpack --mode development --watch",
+    "dev": "yarn server & yarn build:dev",
+    "lintfix": "eslint src/**/**.js --fix",
+    "build": "webpack --mode production"
+  },
+  "author": "suzu nagano",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^9.6.1",
+    "css-loader": "^3.0.0",
+    "globule": "^1.2.1",
+    "html-loader": "^0.5.5",
+    "node-sass": "^4.12.0",
+    "postcss-loader": "^3.0.0",
+    "pug-html-loader": "^1.1.5",
+    "sass-loader": "^7.1.0",
+    "webpack": "^4.35.3",
+    "webpack-cli": "^3.3.5",
+    "webpack-dev-server": "^3.10.3"
+  },
+  "dependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "babel-loader": "^8.0.6",
+    "eslint": "^6.8.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-loader": "^3.0.3",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "file-loader": "^6.0.0",
+    "gsap": "^3.2.6",
+    "html-webpack-plugin": "^4.0.1",
+    "mini-css-extract-plugin": "^0.9.0",
+    "postcss": "^7.0.29",
+    "pug-loader": "^2.4.0",
+    "terser-webpack-plugin": "^2.3.5",
+    "url-loader": "^4.0.0",
+    "vue": "^2.6.11",
+    "webpack-fix-style-only-entries": "^0.4.0"
+  }
+}
