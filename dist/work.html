@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <style>
+      body {
+        font-size: 14px;
+        font-family: "游ゴシック";
+        font-weight: 500;
+      }
+      .app1 > p {
+        width: 100px;
+        height: 100px;
+        background: #ddd;
+      }
+      .v-enter-active,
+      .v-leave-active {
+        transition: opacity 1s ease-out;
+      }
+
+      .v-enter,
+      .v-leave-to {
+        opacity: 0;
+      }
+
+      .wt_list {
+        max-width: 900px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0;
+      }
+      .wt_list_row {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-bottom: 1px solid #717171;
+      }
+
+      .wt_list_col {
+        width: 100px;
+        padding-right: 10px;
+      }
+
+      .wt_list_day {
+        width: 110px;
+      }
+
+      input,
+      select {
+        width: 100px;
+        display: inline-block;
+        line-height: 1.5;
+        padding: 2px 5px;
+        -webkit-appearance: none;
+        box-shadow: none;
+        border: 1px solid #ddd;
+        box-sizing: border-box;
+        font: inherit;
+        line-height: 1.5;
+        min-height: 30px;
+      }
+
+      .is_holiday {
+        color: #c50202;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="example">
+      <ul class="app2 wt_list">
+        <li class="wt_list_row">
+          <div class="wt_list_col wt_list_day">日付</div>
+          <div class="wt_list_col">勤務形態</div>
+          <div class="wt_list_col">出社時間</div>
+          <div class="wt_list_col">終了時間</div>
+          <div class="wt_list_col">在社時間</div>
+          <div class="wt_list_col">休憩時間</div>
+          <div class="wt_list_col">労働時間</div>
+          <div class="wt_list_col">残業時間</div>
+          <div class="wt_list_col">深夜勤務</div>
+        </li>
+        <li
+          v-for="(value,index)  in arr"
+          class="wt_list_row"
+          :class="{is_holiday: value.holiday}"
+          :data-week="value.week"
+        >
+          <div class="wt_list_col wt_list_day">
+            {{ month }}月{{ index + 1 }}日({{ value.week }})
+          </div>
+          <div class="wt_list_col">
+            <select :name="'division_' + index" :id="'division_' + index" class="wt_list_division">
+              <option v-for="division in divisions" :value="division">{{ division }}</option>
+            </select>
+          </div>
+          <div class="wt_list_col">
+            <input type="time" v-model="value.start" />
+          </div>
+          <div class="wt_list_col">
+            <input type="time" v-model="value.end" />
+          </div>
+          <div class="wt_list_col">
+            <span>{{ value.sum }}</span>
+          </div>
+          <div class="wt_list_col">
+            <span>{{ value.rest }}</span>
+          </div>
+          <div class="wt_list_col">
+            <span>{{ value.work }}</span>
+          </div>
+          <div class="wt_list_col">
+            <span>{{ value.over }}</span>
+          </div>
+          <div class="wt_list_col">
+            <span>{{ value.midnight }}</span>
+          </div>
+        </li>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    var vm = new Vue({
+      el: "#example",
+      data: {
+        today: 1,
+        month: "",
+        monthEnd: 31,
+        week: "",
+        divisions: [
+          "通常勤務",
+          "有給休暇",
+          "午前半休",
+          "午後半休",
+          "特別休暇",
+          "時間外代休",
+          "午前半代休",
+          "午後半代休",
+          "休日出勤",
+          "休出代休",
+          "振替出勤",
+          "振替休日",
+          "遅刻",
+          "早退",
+          "欠勤"
+        ],
+        num1: 0,
+        num2: 0,
+        arr: [],
+        holidays: [
+          [1949, 9999, 11, 3, "TEST"],
+          [1949, 9999, 1, 1, "元日"],
+          [2000, 9999, 1, [2, 1], "成人の日"],
+          [1967, 9999, 2, 11, "建国記念の日"],
+          [2020, 9999, 2, 23, "天皇誕生日"],
+          [1949, 2199, 3, "setSyunbun", "春分の日"],
+          [2007, 9999, 4, 29, "昭和の日"],
+          [2019, 2019, 5, 1, "即位の礼"],
+          [1949, 9999, 5, 3, "憲法記念日"],
+          [2007, 9999, 5, 4, "みどりの日"],
+          [1949, 9999, 5, 5, "こどもの日"],
+          [1993, 1993, 6, 9, "皇太子・徳仁親王の結婚の儀"],
+          [1996, 2002, 7, 20, "海の日"],
+          [2003, 9999, 7, [3, 1], "海の日"],
+          [2016, 9999, 8, 11, "山の日"],
+          [1966, 2002, 9, 15, "敬老の日"],
+          [2003, 9999, 9, [3, 1], "敬老の日"],
+          [1948, 2199, 9, "setSyuubun", "秋分の日"],
+          [2000, 9999, 10, [2, 1], "体育の日"],
+          [2019, 2019, 10, 22, "即位の礼正殿の儀"],
+          [1948, 9999, 11, 3, "文化の日"],
+          [1948, 9999, 11, 23, "勤労感謝の日"],
+          [1989, 2018, 12, 23, "天皇誕生日"]
+        ],
+        holidayFlag: false,
+        hurikae: false
+      },
+      watch: {
+        arr: {
+          handler: function(val, oldVal) {
+            for (let i = 0; i < this.arr.length; i++) {
+              // this.$set(array, key, val);
+              if (this.arr[i].end != this.arr[i].start) {
+                this.arr[i].sum = this.timeSub(this.arr[i].end, this.arr[i].start);
+
+                // 労働時間の計算
+                let sumtTime = this.arr[i].sum.split(":");
+                let sumHour = Number(sumtTime[0]);
+                if (sumHour >= 8) {
+                  this.arr[i].rest = "1:00";
+                } else if ( 6 == sumHour || sumHour == 7) {
+                  this.arr[i].rest = "0:45";
+                } else {
+                  this.arr[i].rest = "0:00";
+                }
+                this.arr[i].work = this.timeSub(this.arr[i].sum, this.arr[i].rest);
+
+                // 残業時間の計算
+                let workTime = this.arr[i].work.split(":");
+                let workHour = Number(workTime[0]);
+                let workMin = Number(workTime[1]);
+                if (workHour > 8) {
+                  this.arr[i].over = this.timeSub(this.arr[i].work, "8:00");
+                }
+
+                // 深夜勤務の計算
+                let endTime = this.arr[i].end.split(":");
+                let endHour = Number(endTime[0]);
+                if (endHour > 22) {
+                  this.arr[i].midnight = this.timeSub(this.arr[i].end, "22:00");
+                }
+              }
+            }
+            console.log(this.arr);
+            return false;
+          },
+          deep: true
+        }
+      },
+      computed: {
+        // 算出 getter 関数
+        sumNum: function() {
+          return this.timeSub(this.num1, this.num2);
+        }
+      },
+      created() {
+        this.getDate();
+        this.setArr();
+      },
+      mounted: function() {
+        console.log(this.arr);
+      },
+      methods: {
+        getDate: function() {
+          dayRest = "1:00";
+          this.today = new Date();
+          this.year = this.today.getFullYear();
+          this.month = this.today.getMonth();
+          let monthEnd = new Date(this.today.getFullYear(), this.today.getMonth() + 1, 0);
+          this.monthEnd = Number(String(monthEnd).split(" ")[2]);
+          this.startWeek = String(monthEnd).split(" ")[0];
+          switch (this.month) {
+            case 0:
+              this.month = "1";
+              break;
+            case 1:
+              this.month = "2";
+              break;
+            case 2:
+              this.month = "3";
+              break;
+            case 3:
+              this.month = "4";
+              break;
+            case 4:
+              this.month = "5";
+              break;
+            case 5:
+              this.month = "6";
+              break;
+            case 6:
+              this.month = "7";
+              break;
+            case 7:
+              this.month = "8";
+              break;
+            case 8:
+              this.month = "9";
+              break;
+            case 9:
+              this.month = "10";
+              break;
+            case 10:
+              this.month = "11";
+              break;
+            case 11:
+              this.month = "12";
+              break;
+          }
+        },
+        setArr: function() {
+          for (var i = 0; i < this.monthEnd; i++) {
+            let date = new Date(String(this.year) + "/" + String(this.month) + "/" + String(i + 1));
+            let weekday = ["日", "月", "火", "水", "木", "金", "土"];
+            let targetWeek = weekday[date.getDay()];
+            this.setHoliday(i+1,targetWeek);
+            let def = {
+              week: targetWeek,
+              holiday: targetWeek == "土" || targetWeek == "日" || this.holidayFlag == true || this.hurikae == true? true : false,
+              start: targetWeek == "土" || targetWeek == "日" ? "00:00" : "10:00",
+              end: targetWeek == "土" || targetWeek == "日" ? "00:00" : "19:00",
+              sum: targetWeek == "土" || targetWeek == "日" ? "00:00" : "9:00",
+              rest: targetWeek == "土" || targetWeek == "日" ? "00:00" : "1:00",
+              work: targetWeek == "土" || targetWeek == "日" ? "00:00" : "8:00",
+              over: "0:00",
+              midnight: "0:00"
+            };
+
+            this.arr.push(def);
+            this.arr.splice();
+            console.log(this.arr[i]);
+          }
+        },
+        setHoliday: function(day,week) {
+          console.log(this.hurikae);
+          for(let i = 0; i < this.holidays.length; i++) {
+            if (this.hurikae == true) {
+              this.holidayFlag = true
+              break
+            }else if(this.holidays[i][0] <= this.year <= this.holidays[i][1]){
+              if(this.holidays[i][2] == this.month ){
+                if(this.holidays[i][3] == day ) {
+                  this.holidayFlag = true
+                  if (week == '土' || week == '日') {
+                    this.hurikae = true
+                  }
+                } else {
+                   this.holidayFlag = false
+                   this.hurikae = false
+                }
+              } else {
+                 this.holidayFlag = false
+                 this.hurikae = false
+              }
+            } else {
+               this.holidayFlag = false
+               this.hurikae = false
+            }
+          }
+        },
+
+        // 加算
+        timeSum: function() {
+          var result,
+            times,
+            second,
+            i,
+            len = arguments.length;
+
+          if (len === 0) return;
+          for (i = 0; i < len; i++) {
+            if (!arguments[i] || !arguments[i].match(/^[0-9]+:[0-9]+$/)) continue;
+            times = arguments[i].split(":");
+            second = this.toSecond(times[0], times[1]);
+            if (!second && second !== 0) continue;
+            if (i === 0) {
+              result = second;
+            } else {
+              result += second;
+            }
+          }
+          return this.toTimeFormat(result);
+        },
+
+        // 減算
+        timeSub: function() {
+          var result,
+            times,
+            second,
+            i,
+            len = arguments.length;
+          if (len === 0) return;
+          for (i = 0; i < len; i++) {
+            // if (!arguments[i] || !arguments[i].match(/^[0-9]+:[0-9] {2}$/)) continue;
+            times = arguments[i].split(":");
+            second = this.toSecond(times[0], times[1]);
+            if (!second) continue;
+            if (i === 0) {
+              result = second;
+            } else {
+              result -= second;
+            }
+          }
+          return this.toTimeFormat(result);
+        },
+
+        // 時間を秒に変換
+        toSecond: function(hour, minute) {
+          if (
+            (!hour && hour !== 0) ||
+            (!minute && minute !== 0) ||
+            hour === null ||
+            minute === null ||
+            typeof hour === "boolean" ||
+            typeof minute === "boolean" ||
+            typeof Number(hour) === "NaN" ||
+            typeof Number(minute) === "NaN"
+          )
+            return;
+          return Number(hour) * 60 * 60 + Number(minute) * 60;
+        },
+
+        // 秒を時間(hh:mm:ss)のフォーマットに変換
+        toTimeFormat: function(fullSecond) {
+          var hour, minute, second;
+          if ((!fullSecond && fullSecond !== 0) || !String(fullSecond).match(/^[\-0-9][0-9]*?$/))
+            return;
+          var paddingZero = function(n) {
+            return n < 10 ? "0" + n : n;
+          };
+          hour = Math.floor(Math.abs(fullSecond) / 3600);
+          minute = Math.floor((Math.abs(fullSecond) % 3600) / 60);
+          minute = paddingZero(minute);
+
+          return (fullSecond < 0 ? "-" : "") + hour + ":" + minute;
+        }
+      }
+    });
+  </script>
+</html>

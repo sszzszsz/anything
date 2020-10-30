@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>フォーカスでのページスクロール位置の検証</title>
+
+ <style>
+  body,
+  div,
+  p,
+  header,
+  footer {
+   margin: 0;
+   padding: 0;
+  }
+
+  header {
+   height: 80px;
+   position: relative;
+   margin: 0 auto;
+   width: 1084px;
+   height: 50px;
+   overflow: visible;
+   z-index: 2;
+  }
+
+  .main {
+   clear: both;
+   position: relative;
+   margin: 0 auto;
+   padding: 0;
+   width: 100%;
+   height: auto;
+   z-index: 1;
+   overflow: hidden;
+   background-color: #FFFFFF;
+   border-top: 5px solid #E3000D;
+  }
+
+  .container {
+   clear: both;
+   margin: 0;
+   padding: 0;
+   width: 100%;
+   min-height: 593px;
+   overflow: hidden;
+   z-index: 1;
+   box-shadow: 0 -1px 8px 0 #0077c7;
+   background-image: linear-gradient(to right, #FFFFFF 0%, #FFFFFF 100%);
+   background-image: -ms-linear-gradient(left, #FFFFFF 0%, #FFFFFF 100%);
+   filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#FFFFFF', endColorstr='#FFFFFF');
+  }
+
+  .mainarea {
+   position: relative;
+   margin: 5px auto 0 auto;
+   padding: 0;
+   width: 1130px;
+   min-height: 575px;
+   overflow: hidden;
+   background-color: #ffffff;
+   border-radius: 8px;
+   box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.4);
+  }
+
+  .mainarea-header {
+   width: 100%;
+   height: 45px;
+   position: relative;
+   /* overflow: hidden; */
+   background: #eee;
+  }
+
+  .mainarea-scroll {
+   clear: both;
+   position: relative;
+   margin-left: 10px;
+   margin-right: 0px;
+   margin-top: 8px;
+   min-height: 440px;
+   overflow: hidden;
+   margin-top: 0px;
+   touch-action: pan-x pinch-zoom;
+   user-select: none;
+   overflow: auto;
+   height: 812px;
+  }
+
+  .maincontent {
+   clear: both;
+   margin: 0px 10px;
+   padding: 0;
+   width: 1044px;
+   /* overflow: hidden; */
+  }
+
+  .maincontent-section {
+   margin-bottom: 10px;
+   border: 0px solid #000000;
+   background-color: #FFFFBC;
+  }
+
+  .page-height {
+   height: 900px;
+  }
+
+  .debug {
+   position: absolute;
+   top: 0;
+   left: 0;
+   background: #fff;
+   z-index: 10;
+   padding: 10px;
+  }
+ </style>
+
+ <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+</head>
+
+<body>
+ <div class="wrap">
+  <header>
+   header
+  </header>
+
+  <div class="main">
+   <div class="container">
+    <div class="mainarea">
+     <div class="mainarea-header">
+      お申込み前のご注意
+     </div>
+
+     <div class="mainarea-scroll">
+      <div class="maincontent">
+
+       <div class="maincontent-section">
+        <div id="info1" class="page-height" tabindex="0">
+         コンテンツ１
+        </div>
+       </div>
+       <div class="maincontent-section">
+        <div id="info2" class="page-height" tabindex="0">
+         <p class="ttl" tabindex="0">コンテンツ2</p>
+         フォーカス移動してずれている距離＝一つ前のコンテンツのマージン含む高さースクロールエリアのスクロール量<br>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+
+  <footer>
+   <button id="div">divフォーカス次へ</button>
+   <button id="ttl">ttlフォーカス次へ</button>
+   <button id="scroll">行き過ぎ分戻る</button>
+  </footer>
+
+  <div class="debug">
+   コンテンツ1のマージン含む高さ：<span class="text1"></span><br>
+   maincontentのスクロール量：<span class="text2"></span><br>
+   ずれ：<span class="text3"></span><br>
+  </div>
+
+ </div>
+</body>
+
+<script>
+ $(function () {
+  var btn = $("#next")
+  var Shift = $('#info1').offset().top
+  console.log(Shift)
+
+
+  var scrollContH = $('#info1').parent().outerHeight(true)
+  $('.text1').text(scrollContH)
+  $('.mainarea-scroll').on('scroll', function () {
+   var scroll = $(this).scrollTop()
+   $('.text2').text(scroll)
+   $('.text3').text(scrollContH - scroll)
+  })
+
+
+
+  $('#div').on('click', function () {
+   $('#info2').focus()
+   // var scroll = $('#info1').parent().outerHeight(true)
+   // $('.mainarea-scroll').scrollTop(scroll)
+  })
+
+  $('#ttl').on('click', function () {
+   $('#info2>.ttl').focus()
+   // var scroll = $('#info1').parent().outerHeight(true)
+   // $('.mainarea-scroll').scrollTop(scroll)
+  })
+
+
+  $('#scroll').on('click', function () {
+   console.log($('.maincontent').offset().top)
+   var backScoll = -($('.maincontent').offset().top) + 61
+   $('.mainarea-scroll').scrollTop($('#info1').parent().outerHeight(true))
+  })
+ })
+</script>
+
+</html>

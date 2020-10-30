@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+
+<head>
+ <meta charset="UTF-8">
+ <script src="./js/main.js"></script>
+ <title>ES6のテスト</title>
+
+ <style>
+  body {
+   font-size: 14px;
+   font-family: "游ゴシック";
+   font-weight: 500;
+  }
+
+  li {
+   list-style: none;
+   margin-bottom: 20px;
+  }
+
+  .link {
+   display: block;
+   width: 100px;
+   border: 1px solid rgb(177, 169, 169);
+   text-align: center;
+   cursor: pointer;
+  }
+ </style>
+
+</head>
+
+<body>
+
+ <ul>
+  <li>
+   <a class="link">閉じる</a>
+  </li>
+ </ul>
+
+ <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+ <script>
+  $('.link').on('click', function (e) {
+   window.close();
+  });
+ </script>
+
+</body>
+
+</html>

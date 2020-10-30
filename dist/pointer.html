@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>pointerイベント</title>
+
+ <style>
+  #box {
+   background: #eee;
+   padding: 20px;
+  }
+
+  .event-name {
+   font-size: 16px;
+  }
+
+  p#clear {
+   margin-top: 20px;
+  }
+ </style>
+</head>
+
+<body>
+ <div id="box">
+  <p>event name:<span class="event"></span></p>
+  <p>pointer :<span class="pointer"></span></p>
+  <p>touch :<span class="touch"></span></p>
+  <p>mouse :<span class="mouse"></span></p>
+  <p>ontouchstart :<span class="touchstart"></span></p>
+ </div>
+ <p id="clear">クリア</p>
+
+</body>
+
+<script>
+ function getEventName() {
+  var touch = typeof document.ontouchstart !== 'undefined';
+  var pointer = typeof document.onpointerdown !== 'undefined';
+
+  var rtn = {
+   start: pointer ? 'pointerdown' : touch ? 'touchstart' : 'mousedown',
+   move: pointer ? 'pointermove' : touch ? 'touchmove' : 'mousemove',
+   enter: pointer ? 'pointerenter' : touch ? 'touchstart' : 'mouseover',
+   end: pointer ? 'pointerup' : touch ? 'touchend' : 'mouseup',
+   leave: pointer ? 'pointerleave' : 'mouseleave',
+   click: 'click'
+  };
+  return rtn;
+ }
+ var box = document.getElementById('box')
+ var btn = document.getElementById('clear')
+ var targetHtml = {
+  event: document.getElementsByClassName('event')[0],
+  touch: document.getElementsByClassName('touch')[0],
+  pointer: document.getElementsByClassName('pointer')[0],
+  mouse: document.getElementsByClassName('mouse')[0],
+  touchstart: document.getElementsByClassName('touchstart')[0]
+ }
+ var eventName = getEventName();
+
+ function eventListner() {
+  box.addEventListener(eventName.start, function () {
+   setHtml()
+  })
+
+  btn.addEventListener(eventName.end, function () {
+   clearHtml()
+  })
+ };
+
+ function setHtml() {
+  console.log(eventName.start)
+  targetHtml.event.innerHTML = eventName.start
+  targetHtml.touch.innerHTML = typeof document.ontouchstart ? 'true' : 'false';
+  targetHtml.pointer.innerHTML = typeof document.onpointerdown ? 'true' : 'false';
+  targetHtml.mouse.innerHTML = typeof document.onmousedown ? 'true' : 'false';
+  targetHtml.touchstart.innerHTML = 'ontouchstart' in window ? 'true' : 'false';
+ }
+
+ function clearHtml() {
+  console.log(eventName.end)
+  targetHtml.event.innerHTML = ''
+  targetHtml.touch.innerHTML = ''
+  targetHtml.pointer.innerHTML = ''
+  targetHtml.mouse.innerHTML = ''
+  targetHtml.touchstart.innerHTML = ''
+ }
+ eventListner()
+
+ window.addEventListener('resize', function () {
+  box.removeEventListener(eventName.start, setHtml, false)
+  btn.removeEventListener(eventName.end, clearHtml, false)
+  eventName = getEventName();
+ })
+</script>
+
+</html>

@@ -1,0 +1,17 @@
+$designWith: 1920;
+$contentW : 1000;
+@mixin width($num) {
+	width: calc(#{$num} * (100vw / #{$designWith}));
+}
+
+@mixin fontSize () {
+  $difference: calc(100vw - 1000);
+  font-size: $difference;
+}
+
+.box1 {
+  @include width(400);
+	height: 50px;
+	background: #ddd;
+}
+

@@ -1,0 +1,65 @@
+* {
+	box-sizing: border-box;
+}
+body {
+ max-width: 1000px;
+ margin: 20px auto;
+ font-size: 14px;
+ color: rgb(22, 22, 22);
+}
+h2 {
+ font-size: 18px;
+ margin-top: 50px;
+ span {
+  font-size: 80%;
+ }
+}
+.cont {
+	max-width: 900px;
+	margin: 20px auto;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+th,
+td {
+	padding: 5px 10px;
+	border: 1px solid #555;
+	max-width: 270px;
+ min-width: 250px;
+ background: #fff;
+}
+th {
+ min-width: 150px;
+}
+td > span {
+	display: block;
+	width: max-content;
+	max-width: 250px;
+}
+
+.js-fixedTable {
+ position: relative;
+ overflow: hidden;
+}
+.fixedTable {
+ &-origin {
+  &-wrap {
+   position: relative;
+   z-index: 2;
+   overflow-y: auto;
+  }
+ }
+	&-clone {
+  &-wrap {
+   position: absolute;
+   z-index: 1;
+   top: 0;
+   left: 0;
+  }
+	}
+}

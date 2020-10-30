@@ -1,0 +1,5 @@
+.box1 {
+  width: calc(400 * (100vw / 1920));
+  height: 50px;
+  background: #ddd;
+}
