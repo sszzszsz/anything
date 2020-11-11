@@ -1,177 +1,340 @@
 <!DOCTYPE html>
 <html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fixed Table</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/ress.css" />
+    <link rel="stylesheet" href="./dist/demo.css">
+    <link rel="stylesheet" href="./dist/style.css" />
+    <script src="../js/main.js"></script>
+  </head>
 
-<head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Fixed Table</title>
- <link rel="stylesheet" href="../css/ress.css">
- <link rel="stylesheet" href="./style.css">
- <script src="../js/main.js"></script>
-</head>
+  <body>
+    <h2>固定無し</h2>
+    <div class="cont js-fixedTable">
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th>見出し</th>
+              <th>見出し</th>
+              <th>見出し</th>
+              <th>見出し</th>
+              <th>見出し</th>
+              <th>見出し</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>見出し</th>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+            </tr>
+            <tr>
+              <th>見出し</th>
+              <td>データ</td>
+              <td>データ</td>
+              <td>あああああああああああああああああああああああああああああああ</td>
+              <td>データ</td>
+              <td>データ</td>
+            </tr>
+            <tr>
+              <th>見出し<br />見出し</th>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+            </tr>
+            <tr>
+              <th>見出し</th>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-<body>
+    <h2>縦スクロール　<span>列見出しが固定</span></h2>
+    <ul>
+      <li>対象のテーブル要素を囲う</li>
+      <li>囲った要素にjs-fixedTableと、js-fixedTable-verticalクラスを付与する</li>
+      <li>js-fixedTableの要素にdata-heightでスクロール領域の高さを指定する</li>
+      <li>固定見出しにする行の一番最初に特定のクラス（js-fixedHead）を付与する</li>
+    </ul>
+    <div class="cont js-fixedTable js-fixedTable-vertical" data-height="300">
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th class="js-fixedHead">見出し</th>
+              <th>見出し</th>
+              <th>見出し</th>
+            </tr>
+            <tr>
+              <th class="js-fixedHead">見出し</th>
+              <th>見出し</th>
+              <th>見出し</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+            </tr>
+            <tr>
+              <td>データ</td>
+              <td>あああああああああああああああああああああああああああああああ</td>
+              <td>データ</td>
+            </tr>
+            <tr>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+            </tr>
+            <tr>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+            </tr>
+            <tr>
+              <td>データ</td>
+              <td>
+                ああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ
+              </td>
+              <td>データ</td>
+            </tr>
+            <tr>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+            </tr>
+            <tr>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+            </tr>
+            <tr>
+              <td>データ</td>
+              <td>
+                ああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ
+              </td>
+              <td>データ</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
- <h2>横スクロール　<span>行見出しが追従</span></h2>
- <div class="cont js-fixedTable">
-  <div class="fixedTable-origin-wrap">
-   <table>
-    <thead>
-     <tr>
-      <th>見出し</th>
-      <th>見出し</th>
-      <th>見出し</th>
-      <th>見出し</th>
-      <th>見出し</th>
-      <th>見出し</th>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <th>見出し</th>
-      <td>データ</td>
-      <td>データ</td>
-      <td>データ</td>
-      <td>データ</td>
-      <td>データ</td>
-     </tr>
-     <tr>
-      <th>見出し</th>
-      <td>データ</td>
-      <td>データ</td>
-      <td>あああああああああああああああああああああああああああああああ</td>
-      <td>データ</td>
-      <td>データ</td>
-     </tr>
-     <tr>
-      <th>見出し<br>見出し</th>
-      <td>データ</td>
-      <td>データ</td>
-      <td>データ</td>
-      <td>データ</td>
-      <td>データ</td>
-     </tr>
-     <tr>
-      <th>見出し</th>
-      <td>データ</td>
-      <td>データ</td>
-      <td>データ</td>
-      <td>データ</td>
-      <td>データ</td>
-     </tr>
-    </tbody>
-   </table>
-  </div>
- </div>
+    <h2>横スクロール　<span>行見出しが固定</span></h2>
+    <ul>
+      <li>対象のテーブル要素を囲う</li>
+      <li>囲った要素にjs-fixedTableと、js-fixedTable-horizontalクラスを付与する</li>
+      <li>一番最初の列の、固定見出しにするセルに対して特定のクラス（js-fixedHead）を付与する</li>
+    </ul>
+    <div class="cont js-fixedTable js-fixedTable-horizontal">
+      <div>
+        <table>
+          <tbody>
+            <tr>
+              <th class="js-fixedHead">見出し</th>
+              <th class="js-fixedHead">見出し</th>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+            </tr>
+            <tr>
+              <th colspan="2">見出し</th>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+            </tr>
+            <tr>
+              <th rowspan="2">見出し</th>
+              <th>見出し</th>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+            </tr>
+            <tr>
+              <th>見出し</th>
+              <td>データ</td>
+              <td>データ</td>
+              <td>あああああああああああああああああああああああああああああああ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+            </tr>
+            <tr>
+              <th rowspan="2">見出し<br />見出し</th>
+              <th>見出し<br />見出し</th>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+            </tr>
+            <tr>
+              <th>見出し<br />見出し</th>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
- <h2>横スクロール　<span>行見出しが追従</span></h2>
- <div class="cont js-fixedTable">
-  <div class="fixedTable-origin-wrap">
-   <table>
-    <thead>
-     <tr>
-      <th colspan="2">見出し</th>
-      <th>見出し</th>
-      <th>見出し</th>
-      <th>見出し</th>
-      <th>見出し<br>見出し</th>
-      <th>見出し</th>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <th rowspan="2">見出し</th>
-      <th>見出し</th>
-      <td>データ</td>
-      <td>データ</td>
-      <td>データ</td>
-      <td>データ</td>
-      <td>データ</td>
-     </tr>
-     <tr>
-      <th>見出し</th>
-      <td>データ</td>
-      <td>データ</td>
-      <td>あああああああああああああああああああああああああああああああ</td>
-      <td>データ</td>
-      <td>データ</td>
-     </tr>
-     <tr>
-      <th rowspan="2">見出し<br>見出し</th>
-      <th>見出し<br>見出し</th>
-      <td>データ</td>
-      <td>データ</td>
-      <td>データ</td>
-      <td>データ</td>
-      <td>データ</td>
-     </tr>
-     <tr>
-      <th>見出し<br>見出し</th>
-      <td>データ</td>
-      <td>データ</td>
-      <td>データ</td>
-      <td>データ</td>
-      <td>データ</td>
-     </tr>
-    </tbody>
-   </table>
-  </div>
- </div>
+    <h2>縦横スクロール</h2>
+    <ul>
+      <li>対象のテーブル要素を囲う</li>
+      <li>囲った要素にjs-fixedTableと、js-fixedTable-vhクラスを付与する</li>
+    </ul>
+    <div class="cont js-fixedTable js-fixedTable-vh" data-height="300">
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th class="js-fixedHead">見出し</th>
+              <th class="js-fixedHead">見出し<br />見出し</th>
+              <th>見出し</th>
+              <th>見出し</th>
+              <th>見出し<br />見出し</th>
+              <th>見出し</th>
+              <th>見出し</th>
+            </tr>
+            <tr>
+              <th class="js-fixedHead">見出し</th>
+              <th>見出し</th>
+              <th>見出し</th>
+              <th>見出し</th>
+              <th>見出し<br />見出し</th>
+              <th>見出し</th>
+              <th>見出し</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>見出し</th>
+              <th>見出し</th>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+            </tr>
+            <tr>
+              <th>見出し</th>
+              <th>見出し</th>
+              <td>データ</td>
+              <td>データ</td>
+              <td>あああああああああああああああああああああああああああああああ</td>
+              <td>データ</td>
+              <td>データ</td>
+            </tr>
+            <tr>
+              <th rowspan="2">見出し<br />見出し</th>
+              <th>見出し<br />見出し</th>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+            </tr>
+            <tr>
+              <th>見出し<br />見出し</th>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
- <h2>横スクロール　<span>行見出しが追従</span></h2>
- <div class="cont js-fixedTable">
-  <div class="fixedTable-origin-wrap">
-   <table>
-    <thead>
-     <tr>
-      <th>見出し</th>
-      <th>見出し</th>
-      <th>見出し</th>
-      <th>見出し</th>
-      <th>見出し</th>
-      <th>見出し<br>見出し</th>
-      <th>見出し</th>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <th colspan="2">見出し</th>
-      <td>データ</td>
-      <td>データ</td>
-      <td>データ</td>
-      <td>データ</td>
-      <td>データ</td>
-     </tr>
-     <tr>
-      <th>見出し</th>
-      <th>見出し</th>
-      <td>データ</td>
-      <td>データ</td>
-      <td>あああああああああああああああああああああああああああああああ</td>
-      <td>データ</td>
-      <td>データ</td>
-     </tr>
-     <tr>
-      <th rowspan="2">見出し<br>見出し</th>
-      <th>見出し<br>見出し</th>
-      <td>データ</td>
-      <td>データ</td>
-      <td>データ</td>
-      <td>データ</td>
-      <td>データ</td>
-     </tr>
-     <tr>
-      <th>見出し<br>見出し</th>
-      <td>データ</td>
-      <td>データ</td>
-      <td>データ</td>
-      <td>データ</td>
-      <td>データ</td>
-     </tr>
-    </tbody>
-   </table>
-  </div>
- </div>
-</body>
-
+    <div class="cont js-fixedTable js-fixedTable-vh" data-height="200">
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th colspan="2" rowspan="2" class="js-fixedHead">見出し</th>
+              <th>見出し</th>
+              <th>見出し</th>
+              <th>見出し</th>
+              <th>見出し<br />見出し</th>
+              <th>見出し</th>
+            </tr>
+            <tr>
+              <th>見出し</th>
+              <th>見出し</th>
+              <th>見出し</th>
+              <th>見出し<br />見出し</th>
+              <th>見出し</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th colspan="2" class="js-fixedHead">見出し</th>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+            </tr>
+            <tr>
+              <th class="js-fixedHead">見出し</th>
+              <th>見出し</th>
+              <td>データ</td>
+              <td>データ</td>
+              <td>あああああああああああああああああああああああああああああああ</td>
+              <td>データ</td>
+              <td>データ</td>
+            </tr>
+            <tr>
+              <th rowspan="2" class="js-fixedHead">見出し<br />見出し</th>
+              <th>見出し<br />見出し</th>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+            </tr>
+            <tr>
+              <th>見出し<br />見出し</th>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+              <td>データ</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
 </html>

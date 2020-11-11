@@ -1,13 +1,16 @@
+// 出力は絶対pathで指定しなければいけない為、node.jsのpathモジュールを使用する
+const path = require('path');
+
 module.exports = {
   // モード値を production に設定すると最適化された状態で、
   // development に設定するとソースマップ有効でJSファイルが出力される
   mode: "development",
-  //   devtool: "source-map",
+    devtool: "source-map",
 
   // メインとなるJavaScriptファイル（エントリーポイント）
-  // polyfill はIE11などで必要
-  entry: ["@babel/polyfill", "./src/index.js"],
-
+  entry: {
+    path: path.resolve(__dirname, './src/index.js'),
+  },
   // ファイルの出力設定
   output: {
     //  出力ファイルのディレクトリ名
@@ -38,5 +41,11 @@ module.exports = {
         }
       }
     ]
+  },
+  // webpack-dev-serverを立ち上げた時のドキュメントルートを設定
+  devServer: {
+    contentBase: path.resolve(__dirname, 'dist'),
+    watchContentBase: true,
+    open: true
   }
 };
