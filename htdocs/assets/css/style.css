@@ -42,7 +42,6 @@ body {
 
 input, input[type=file], textarea, button, select {
   -webkit-appearance: none;
-  -moz-appearance: none;
   appearance: none;
   outline: none;
   margin: 0;
@@ -442,3 +441,6 @@ br.sp {
 ------------------------------*/
 /*	footer
 ------------------------------*/
+h1 {
+  color: red;
+}
