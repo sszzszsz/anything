@@ -213,6 +213,8 @@
       <li>対象のテーブル要素を囲う</li>
       <li>囲った要素にjs-fixedTableと、js-fixedTable-vhクラスを付与する</li>
     </ul>
+
+    <h3>縦横スクロールで横スクロールのみ</h3>
     <div class="cont js-fixedTable js-fixedTable-vh" data-height="300">
       <div>
         <table>
@@ -277,6 +279,77 @@
       </div>
     </div>
 
+    <h3>縦横スクロールで縦スクロールのみ</h3>
+    <div class="cont js-fixedTable js-fixedTable-vh" data-height="200">
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th class="js-fixedHead">見出し</th>
+              <th class="js-fixedHead">見出し<br />見出し</th>
+              <th>見出し</th>
+              <th>見出し<br />見出し</th>
+            </tr>
+            <tr>
+              <th class="js-fixedHead">見出し</th>
+              <th>見出し</th>
+              <th>見出し<br />見出し</th>
+              <th>見出し</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>見出し</th>
+              <th>見出し</th>
+              <td>データ</td>
+              <td>データ</td>
+            </tr>
+            <tr>
+              <th>見出し</th>
+              <th>見出し</th>
+              <td>データ</td>
+              <td>データ</td>
+            </tr>
+            <tr>
+              <th rowspan="2">見出し<br />見出し</th>
+              <th>見出し<br />見出し</th>
+              <td>データ</td>
+              <td>データ</td>
+            </tr>
+            <tr>
+              <th>見出し<br />見出し</th>
+              <td>データ</td>
+              <td>データ</td>
+            </tr>
+            <tr>
+              <th rowspan="2">見出し<br />見出し</th>
+              <th>見出し<br />見出し</th>
+              <td>データ</td>
+              <td>データ</td>
+            </tr>
+            <tr>
+              <th>見出し<br />見出し</th>
+              <td>データ</td>
+              <td>データ<br />データ<br />データデータデータデータ</td>
+            </tr>
+            <tr>
+              <th>見出し</th>
+              <th>見出し</th>
+              <td>データ</td>
+              <td>データ</td>
+            </tr>
+            <tr>
+              <th>見出し</th>
+              <th>見出し</th>
+              <td>データ</td>
+              <td>データ</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <h3>縦横スクロール</h3>
     <div class="cont js-fixedTable js-fixedTable-vh" data-height="200">
       <div>
         <table>
@@ -336,5 +409,9 @@
         </table>
       </div>
     </div>
+
+    <footer>
+      Vanilla Fixed Table
+    </footer>
   </body>
 </html>

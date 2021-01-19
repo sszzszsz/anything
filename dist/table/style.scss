@@ -18,13 +18,22 @@
       left: 0;
       width: 100%;
     }
-	}
-	
-	&-tl-wrap,
-	&-tr-wrap {
-		position: absolute;
-		z-index: 1;
-		top: 0;
-		left: 0;
-	}
+  }
+
+  &-tl-wrap,
+  &-tr-wrap,
+  &-bl-wrap,
+  &-br-wrap {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+  }
+  &-tl-wrap,
+  &-bl-wrap {
+    overflow: hidden;
+  }
+  &-br-wrap {
+    z-index: 1;
+  }
 }

@@ -30,13 +30,26 @@ export default class FixedTable {
     if (this.wrap.classList.contains('js-fixedTable-vh')) {
       console.log('縦横')
       this.type = 'vh'
-      this.colneFourTable()
-      this.setFirxedColRowStyle()
+      this.maxHeight = this.wrap.getAttribute('data-height')
 
+      if (this.judgeOverflow() === true) {
+        this.colneFourTable()
+        this.setFirxedColRowStyle()
+        this.setFirxedColRowEvent()
+      } else if (this.judgeOverflow() === 'h') {
+        this.type = 'h'
+        this.colneTable()
+        this.setFirxedColStyle()
+      } else if (this.judgeOverflow() === 'v') {
+        this.type = 'v'
+        this.colneTable()
+        this.setFirxedRowStyle()
+      }
       // 横スクロールだったら
     } else if (this.wrap.classList.contains('js-fixedTable-horizontal')) {
       console.log('横')
       this.type = 'h'
+
       this.colneTable()
       this.setFirxedColStyle()
 
@@ -44,8 +57,12 @@ export default class FixedTable {
     } else if (this.wrap.classList.contains('js-fixedTable-vertical')) {
       console.log('縦')
       this.type = 'v'
-      this.colneTable()
-      this.setFirxedRowStyle()
+      this.maxHeight = this.wrap.getAttribute('data-height')
+
+      if (this.judgeOverflow()) {
+        this.colneTable()
+        this.setFirxedRowStyle()
+      }
 
       // なんでもない
     } else if (this.fixedColNum == null && this.fixedRowNum == null) {
@@ -72,29 +89,29 @@ export default class FixedTable {
   }
 
   // ----------------------------
-  // オリジナルのテーブルを複製してクローン作成
+  // オリジナルのテーブルを4つ複製してクローン作成
   // ----------------------------
   colneFourTable() {
     let topLeftTableWrap = this.originTableWrap.cloneNode(true)
     let topRightTableWrap = this.originTableWrap.cloneNode(true)
-    let bottomLeftWrap = this.originTableWrap.cloneNode(true)
-    let bottomRightWrap = this.originTableWrap.cloneNode(true)
+    let bottomLeftTableWrap = this.originTableWrap.cloneNode(true)
+    let bottomRightTableWrap = this.originTableWrap.cloneNode(true)
 
     this.originTableWrap.setAttribute('class', 'fixedTable-origin-wrap')
     topLeftTableWrap.setAttribute('class', 'fixedTable-tl-wrap')
     topRightTableWrap.setAttribute('class', 'fixedTable-tr-wrap')
-    bottomLeftWrap.setAttribute('class', 'fixedTable-bl-wrap')
-    bottomRightWrap.setAttribute('class', 'fixedTable-br-wrap')
+    bottomLeftTableWrap.setAttribute('class', 'fixedTable-bl-wrap')
+    bottomRightTableWrap.setAttribute('class', 'fixedTable-br-wrap')
 
     this.wrap.appendChild(topLeftTableWrap)
     this.wrap.appendChild(topRightTableWrap)
-    this.wrap.appendChild(bottomLeftWrap)
-    this.wrap.appendChild(bottomRightWrap)
+    this.wrap.appendChild(bottomLeftTableWrap)
+    this.wrap.appendChild(bottomRightTableWrap)
 
     this.topLeftTableWrap = this.wrap.children[1]
     this.topRightTableWrap = this.wrap.children[2]
-    this.bottomLeftWrap = this.wrap.children[3]
-    this.bottomRightWrap = this.wrap.children[4]
+    this.bottomLeftTableWrap = this.wrap.children[3]
+    this.bottomRightTableWrap = this.wrap.children[4]
   }
 
   // ----------------------------
@@ -120,12 +137,16 @@ export default class FixedTable {
     this.getBorderWidth()
 
     let scrollContHeight = this.wrap.getAttribute('data-height')
-    this.originTableWrap.style.marginTop = this.fixedColHeight + this.borderWidth + 'px'
-    this.originTableWrap.style.maxHeight = scrollContHeight + 'px'
-    this.originTable.style.marginTop = -this.fixedColHeight - this.borderWidth + 'px'
+    this.originTableWrap.style.marginTop = `${this.fixedColHeight + this.borderWidth}px`
+    this.originTableWrap.style.maxHeight = `${scrollContHeight}px`
+    this.originTable.style.marginTop = `-${this.fixedColHeight + this.borderWidth}px`
 
-    this.cloneTableWrap.style.height = this.fixedColHeight + this.borderWidth + 'px'
+    this.cloneTableWrap.style.height = `${this.fixedColHeight + this.borderWidth}px`
     this.cloneTableWrap.style.overflow = 'hidden'
+
+    // overflowがかかってスクロールバーが表示されてからスクロールバーの幅を取得する
+    this.getScrollbarWidth()
+    this.cloneTableWrap.style.width = `${this.wrap.offsetWidth - this.scrollbarW}px`
   }
 
   // ----------------------------
@@ -135,22 +156,27 @@ export default class FixedTable {
     this.getFIxedColInfo()
     this.getBorderWidth()
     let scrollContHeight = this.wrap.getAttribute('data-height')
+    let fixedH = this.fixedColHeight + this.borderWidth
+    let fixedW = this.fixedColWidth + this.borderWidth
+
     this.wrap.style.maxHeight = scrollContHeight + 'px'
 
     // 左上
-    this.topLeftTableWrap.style.width = this.fixedColWidth + this.borderWidth + 'px'
-    this.topLeftTableWrap.style.height = this.fixedColHeight + this.borderWidth + 'px'
-    this.topLeftTableWrap.style.overflow = 'hidden'
+    this.topLeftTableWrap.style.width = fixedW + 'px'
+    this.topLeftTableWrap.style.height = fixedH + 'px'
 
     // 左下
+    this.bottomLeftTableWrap.style.width = fixedW + 'px'
+    this.bottomLeftTableWrap.style.top = fixedH + 'px'
+    this.bottomLeftTableWrap.style.marginTop = -fixedH + 'px'
 
     // 右上
-    this.topRightTableWrap.style.marginLeft = this.fixedColWidth + this.borderWidth + 'px'
-    this.topRightTableWrap.children[0].style.marginLeft =
-      -this.fixedColWidth - this.borderWidth + 'px'
-    this.topRightTableWrap.style.height = this.fixedColHeight + this.borderWidth + 'px'
+    this.topRightTableWrap.style.marginLeft = fixedW + 'px'
+    this.topRightTableWrap.children[0].style.marginLeft = -fixedW + 'px'
+    this.topRightTableWrap.style.height = fixedH + 'px'
 
     // 右下
+    this.bottomRightTableWrap.style.marginLeft = fixedW + 'px'
   }
 
   // ----------------------------
@@ -193,5 +219,49 @@ export default class FixedTable {
     let cssStyle = getComputedStyle(target, null)
     this.borderWidth = parseInt(cssStyle.getPropertyValue('border-left-width'), 10)
     console.log('枠線幅：' + this.borderWidth)
+  }
+  // ----------------------------
+  // スクロールバーの幅取得
+  // ----------------------------
+  getScrollbarWidth() {
+    // if (this.scrollbarW) return
+
+    if (this.type === 'v') {
+      this.scrollbarW = this.wrap.offsetWidth - this.originTable.offsetWidth
+    }
+    console.log('スクロールバーの幅:' + this.scrollbarW)
+  }
+  // ----------------------------
+  // 表がスクロールするかしないか判定
+  // ----------------------------
+  judgeOverflow() {
+    let flag
+    if (this.type === 'v') {
+      flag = this.wrap.offsetHeight > this.maxHeight
+    } else if (this.type === 'h') {
+      flag = this.wrap.offsetWidth < this.originTable.offsetWidth
+    } else if (this.type === 'vh') {
+      if (this.wrap.offsetWidth < this.originTable.offsetWidth && this.wrap.offsetHeight > this.maxHeight) {
+        flag = true
+      } else if (this.wrap.offsetWidth < this.originTable.offsetWidth && this.wrap.offsetHeight <= this.maxHeight) {
+        // 縦横指定だけど、横スクしかしない時
+        flag = 'h'
+      } else if (this.wrap.offsetWidth >= this.originTable.offsetWidth && this.wrap.offsetHeight > this.maxHeight) {
+        // 縦横指定だけど、縦スクしかしない時
+        flag = 'v'
+      }
+    }
+    console.log(flag)
+    return flag
+  }
+  // ----------------------------
+  // 縦横スクロールのスクロールイベント
+  // ----------------------------
+  setFirxedColRowEvent() {
+    // 右上スクロール時
+    this.topRightTableWrap.addEventListener('scroll', () => {
+      console.log('scroll')
+    });
+
   }
 }
