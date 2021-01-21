@@ -1,7 +1,8 @@
 .js-fixedTable {
   position: relative;
-  overflow: hidden;
+  overflow: auto;
 }
+
 .fixedTable {
   &-origin {
     &-wrap {
@@ -20,20 +21,43 @@
     }
   }
 
-  &-tl-wrap,
-  &-tr-wrap,
-  &-bl-wrap,
-  &-br-wrap {
+  &-vh {
+  }
+}
+
+.js-fixedTable-vh {
+  .fixedTable-tl-wrap,
+  .fixedTable-tr-wrap,
+  .fixedTable-bl-wrap,
+  .fixedTable-br-wrap {
     position: absolute;
     z-index: 2;
     top: 0;
     left: 0;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
   }
-  &-tl-wrap,
-  &-bl-wrap {
+  .fixedTable-tl-wrap {
     overflow: hidden;
   }
-  &-br-wrap {
-    z-index: 1;
+  .fixedTable-tr-wrap {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  .fixedTable-bl-wrap {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  .fixedTable-br-wrap {
+    z-index: 3;
+    overflow: auto;
+  }
+
+  &.scroll-vh {
+    overflow: hidden;
+    .fixedTable-origin-wrap {
+      overflow: hidden;
+      opacity: 0;
+    }
   }
 }
