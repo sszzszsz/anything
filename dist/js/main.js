@@ -453,7 +453,7 @@ var FixedTable = /*#__PURE__*/function () {
       console.log(flag);
       return flag;
     } // ----------------------------
-    // 縦横スクロールのスクロールイベント付与
+    // 縦横スクロールの初回スクロールイベント付与
     // ----------------------------
 
   }, {
@@ -461,107 +461,99 @@ var FixedTable = /*#__PURE__*/function () {
     value: function setFirxedColRowEvent() {
       var _this = this;
 
-      this.isScrolling = false; // 右下スクロール時
+      var scrollTargetEl;
+      this.isScrolling = false;
+      this.bottomRightTableWrap.addEventListener("scroll", doScrollLink);
+      this.bottomLeftTableWrap.addEventListener("scroll", doScrollLink);
+      this.topRightTableWrap.addEventListener("scroll", doScrollLink);
+      this.bottomRightTableWrap.addEventListener("scroll", scrollEnd);
+      this.bottomLeftTableWrap.addEventListener("scroll", scrollEnd);
+      this.topRightTableWrap.addEventListener("scroll", scrollEnd); // ----------------------------
+      // 縦横スクロールのスクロールイベント連動
+      // 右上横スクロール時 = 右下と横スクロールが同期
+      // 左下縦スクロール時 = 右下と縦スクロールが同期
+      // 右下スクロール時 = 右上と横スクロール、左下と縦スクロールが同期
+      // ----------------------------
 
-      this.bottomRightTableWrap.addEventListener("scroll", {
-        self: _this,
-        handleEvent: _this.doScrollLink
-      }); // 右上スクロール時
+      function doScrollLink(event) {
+        scrollTargetEl = event.target;
+        scrollStart(scrollTargetEl, _this.wrap); // 右下スクロールだったら
 
-      this.topRightTableWrap.addEventListener("scroll", _this.doScrollLink); // 左下スクロール時
+        if (scrollTargetEl.classList.contains("fixedTable-br-wrap")) {
+          console.log("右下"); // 右上と左下をスクロールと同期させる
 
-      this.bottomLeftTableWrap.addEventListener("scroll", _this.doScrollLink);
-    } // ----------------------------
-    // 縦横スクロールのスクロールイベント付与
-    // ----------------------------
-
-  }, {
-    key: "doScrollLink",
-    value: function doScrollLink(event, self) {
-      var _this = this.self; // 右下スクロールだったら
-
-      if (event.target.classList.contains("fixedTable-br-wrap")) {
-        console.log("右下"); // 右上と左下のスクロールイベントを解除
-
-        _this.topRightTableWrap.removeEventListener("scroll", _this.doScrollLink);
-
-        _this.bottomLeftTableWrap.removeEventListener("scroll", _this.doScrollLink); // 右上と左下をスクロールと同期させる
-
-
-        _this.topRightTableWrap.scrollLeft = event.target.scrollLeft;
-        _this.bottomLeftTableWrap.scrollTop = event.target.scrollTop;
-
-        _this.scrollStart(event.target); // 右上スクロールだったら
-
-      } else if (event.target.classList.contains("fixedTable-tr-wrap")) {
-        console.log("右上");
-
-        _this.bottomRightTableWrap.removeEventListener("scroll", _this.doScrollLink);
-
-        _this.bottomRightTableWrap.scrollLeft = event.target.scrollLeft; // 左下スクロールだったら
-      } else if (event.target.classList.contains("fixedTable-bl-wrap")) {
-        console.log("左下");
-
-        _this.bottomRightTableWrap.removeEventListener("scroll", _this.doScrollLink);
-
-        _this.bottomRightTableWrap.scrollTop = event.target.scrollTop;
-      }
-    } // ----------------------------
-    // スクロール開始検知イベント
-    // ・スクロール初回時ににスクロール終了を検知するイベントを一度だけ設置するため
-    // ----------------------------
-
-  }, {
-    key: "scrollStart",
-    value: function scrollStart(target) {
-      var _this = this;
-
-      if (this.isScrolling) {
-        this.isScrolling = true;
-      } else {
-        console.log("スクロール開始");
-        this.isScrolling = true;
-
-        _this.scrollEnd(target);
-      }
-    } // ----------------------------
-    // スクロール終了検知イベント
-    // ----------------------------
-
-  }, {
-    key: "scrollEnd",
-    value: function scrollEnd(target) {
-      console.log("スクロール終了予約");
-
-      var _this = this; // Setup isScrolling variable
+          _this.topRightTableWrap.scrollLeft = scrollTargetEl.scrollLeft;
+          _this.bottomLeftTableWrap.scrollTop = scrollTargetEl.scrollTop; // 右上スクロールだったら
+        } else if (scrollTargetEl.classList.contains("fixedTable-tr-wrap")) {
+          console.log("右上");
+          _this.bottomRightTableWrap.scrollLeft = scrollTargetEl.scrollLeft; // 左下スクロールだったら
+        } else if (scrollTargetEl.classList.contains("fixedTable-bl-wrap")) {
+          console.log("左下");
+          _this.bottomRightTableWrap.scrollTop = scrollTargetEl.scrollTop;
+        }
+      } // ----------------------------
+      // スクロール開始検知イベント
+      // ・スクロール初回時にスクロール破棄
+      // ----------------------------
 
 
-      var isScrolling; // Listen for scroll events
+      function scrollStart(target) {
+        if (_this.isScrolling) {
+          _this.isScrolling = true;
+        } else {
+          console.log("スクロール開始");
+          removeScrollEvent(target);
+          _this.isScrolling = true;
+        }
+      } // ----------------------------
+      // 縦横スクロールのスクロールイベントを破棄
+      // this => コンストラクタ
+      // ----------------------------
 
-      target.addEventListener("scroll", function (event) {
-        // Clear our timeout throughout the scroll
-        window.clearTimeout(isScrolling); // Set a timeout to run after scrolling ends
 
-        isScrolling = setTimeout(function () {
-          // Run the callback
-          _this.reSetScrollEvent(target);
+      function removeScrollEvent(targetEl) {
+        if (targetEl.classList.contains("fixedTable-br-wrap")) {
+          _this.topRightTableWrap.removeEventListener("scroll", doScrollLink);
 
-          console.log("Scrolling has stopped.");
-        }, 66);
-      }, false);
-    } // ----------------------------
-    // スクロール終了検知したら再度スクロールイベントを付与する
-    // ----------------------------
+          _this.bottomLeftTableWrap.removeEventListener("scroll", doScrollLink);
 
-  }, {
-    key: "reSetScrollEvent",
-    value: function reSetScrollEvent(target) {
-      var _this = this;
+          console.log("remove");
+        } else if (targetEl.classList.contains("fixedTable-tr-wrap")) {
+          _this.bottomRightTableWrap.removeEventListener("scroll", doScrollLink);
+        } else if (targetEl.classList.contains("fixedTable-bl-wrap")) {
+          _this.bottomRightTableWrap.removeEventListener("scroll", doScrollLink);
+        }
+      } // ----------------------------
+      // スクロール終了検知イベント
+      // ----------------------------
 
-      if (target.classList.contains("fixedTable-br-wrap")) {
-        console.log(target);
-        this.topRightTableWrap.removeEventListener("scroll", this.doScrollLink);
-        this.bottomLeftTableWrap.removeEventListener("scroll", this.doScrollLink);
+
+      function scrollEnd() {
+        _this.isScrollTimerId;
+        window.clearTimeout(_this.isScrollTimerId);
+        _this.isScrollTimerId = setTimeout(function () {
+          console.log("スクロール終了");
+          reSetScrollEvent(scrollTargetEl);
+        }, 500);
+      } // ----------------------------
+      // スクロール終了検知したら再度スクロールイベントを付与する
+      // this => イベントが発生したスクロール領域が格納されている
+      // 引数でコンストラクタを参照する（this.self）
+      // ----------------------------
+
+
+      function reSetScrollEvent(targetEl) {
+        console.log("スクロールイベント再付与");
+
+        if (targetEl.classList.contains("fixedTable-br-wrap")) {
+          _this.topRightTableWrap.addEventListener("scroll", doScrollLink);
+
+          _this.bottomLeftTableWrap.addEventListener("scroll", doScrollLink);
+        } else if (targetEl.classList.contains("fixedTable-tr-wrap")) {
+          _this.bottomRightTableWrap.addEventListener("scroll", doScrollLink);
+        } else if (targetEl.classList.contains("fixedTable-bl-wrap")) {
+          _this.bottomRightTableWrap.addEventListener("scroll", doScrollLink);
+        }
       }
     }
   }]);
@@ -644,14 +636,26 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var user = new _BusinessMember__WEBPACK_IMPORTED_MODULE_0__["default"]('taro', 'yamada', 'G社');
-window.addEventListener('load', function () {
-  var tableLists = Array.from(document.getElementsByClassName('js-fixedTable'));
+var user = new _BusinessMember__WEBPACK_IMPORTED_MODULE_0__["default"]("taro", "yamada", "G社");
+window.addEventListener("load", function () {
+  var tableLists = Array.from(document.getElementsByClassName("js-fixedTable"));
   var tableInstance = tableLists.map(function (table) {
     var item = new _FixedTable__WEBPACK_IMPORTED_MODULE_1__["default"](table);
     item.init();
     return item;
-  }); // console.log(tableInstance)
+  }); /// クリックリスナー登録。useCaptureは true に設定
+
+  var footer = document.getElementById("footer");
+  footer.addEventListener("click", showAlert); /// リスナーのコールバック関数
+
+  function showAlert() {
+    alert("Button is clicked");
+    removeEvent();
+  }
+
+  function removeEvent() {
+    footer.removeEventListener("click", showAlert);
+  }
 });
 
 /***/ })

@@ -309,112 +309,106 @@ export default class FixedTable {
     return flag;
   }
   // ----------------------------
-  // 縦横スクロールのスクロールイベント付与
+  // 縦横スクロールの初回スクロールイベント付与
   // ----------------------------
   setFirxedColRowEvent() {
     const _this = this;
+    let scrollTargetEl
     this.isScrolling = false;
+    this.bottomRightTableWrap.addEventListener("scroll", doScrollLink);
+    this.bottomLeftTableWrap.addEventListener("scroll", doScrollLink);
+    this.topRightTableWrap.addEventListener("scroll", doScrollLink);
 
-    // 右下スクロール時
-    this.bottomRightTableWrap.addEventListener("scroll", {
-      self: _this,
-      handleEvent: _this.doScrollLink,
-    });
-    // 右上スクロール時
-    this.topRightTableWrap.addEventListener("scroll", _this.doScrollLink);
-    // 左下スクロール時
-    this.bottomLeftTableWrap.addEventListener("scroll", _this.doScrollLink);
-  }
-  // ----------------------------
-  // 縦横スクロールのスクロールイベント付与
-  // ----------------------------
-  doScrollLink(event, self) {
-    const _this = this.self;
+    this.bottomRightTableWrap.addEventListener("scroll", scrollEnd);
+    this.bottomLeftTableWrap.addEventListener("scroll", scrollEnd);
+    this.topRightTableWrap.addEventListener("scroll", scrollEnd);
 
-    // 右下スクロールだったら
-    if (event.target.classList.contains("fixedTable-br-wrap")) {
-      console.log("右下");
-      // 右上と左下のスクロールイベントを解除
-      _this.topRightTableWrap.removeEventListener("scroll", _this.doScrollLink);
-      _this.bottomLeftTableWrap.removeEventListener(
-        "scroll",
-        _this.doScrollLink
-      );
+    // ----------------------------
+    // 縦横スクロールのスクロールイベント連動
+    // 右上横スクロール時 = 右下と横スクロールが同期
+    // 左下縦スクロール時 = 右下と縦スクロールが同期
+    // 右下スクロール時 = 右上と横スクロール、左下と縦スクロールが同期
+    // ----------------------------
+    function doScrollLink(event) {
+      scrollTargetEl = event.target
+      scrollStart(scrollTargetEl, _this.wrap);
 
-      // 右上と左下をスクロールと同期させる
-      _this.topRightTableWrap.scrollLeft = event.target.scrollLeft;
-      _this.bottomLeftTableWrap.scrollTop = event.target.scrollTop;
+      // 右下スクロールだったら
+      if (scrollTargetEl.classList.contains("fixedTable-br-wrap")) {
+        console.log("右下");
+        // 右上と左下をスクロールと同期させる
+        _this.topRightTableWrap.scrollLeft = scrollTargetEl.scrollLeft;
+        _this.bottomLeftTableWrap.scrollTop = scrollTargetEl.scrollTop;
 
-      _this.scrollStart(event.target);
+        // 右上スクロールだったら
+      } else if (scrollTargetEl.classList.contains("fixedTable-tr-wrap")) {
+        console.log("右上");
+        _this.bottomRightTableWrap.scrollLeft = scrollTargetEl.scrollLeft;
 
-      // 右上スクロールだったら
-    } else if (event.target.classList.contains("fixedTable-tr-wrap")) {
-      console.log("右上");
-      _this.bottomRightTableWrap.removeEventListener(
-        "scroll",
-        _this.doScrollLink
-      );
-      _this.bottomRightTableWrap.scrollLeft = event.target.scrollLeft;
-
-      // 左下スクロールだったら
-    } else if (event.target.classList.contains("fixedTable-bl-wrap")) {
-      console.log("左下");
-      _this.bottomRightTableWrap.removeEventListener(
-        "scroll",
-        _this.doScrollLink
-      );
-      _this.bottomRightTableWrap.scrollTop = event.target.scrollTop;
+        // 左下スクロールだったら
+      } else if (scrollTargetEl.classList.contains("fixedTable-bl-wrap")) {
+        console.log("左下");
+        _this.bottomRightTableWrap.scrollTop = scrollTargetEl.scrollTop;
+      }
     }
-  }
-  // ----------------------------
-  // スクロール開始検知イベント
-  // ・スクロール初回時ににスクロール終了を検知するイベントを一度だけ設置するため
-  // ----------------------------
-  scrollStart(target) {
-    const _this = this;
 
-    if (this.isScrolling) {
-      this.isScrolling = true;
-    } else {
-      console.log("スクロール開始");
-      this.isScrolling = true;
-      _this.scrollEnd(target);
+    // ----------------------------
+    // スクロール開始検知イベント
+    // ・スクロール初回時にスクロール破棄
+    // ----------------------------
+    function scrollStart(target) {
+      if (_this.isScrolling) {
+        _this.isScrolling = true;
+      } else {
+        console.log("スクロール開始");
+        removeScrollEvent(target);
+        _this.isScrolling = true;
+      }
     }
-  }
-  // ----------------------------
-  // スクロール終了検知イベント
-  // ----------------------------
-  scrollEnd(target) {
-    console.log("スクロール終了予約");
-    const _this = this;
-    // Setup isScrolling variable
-    let isScrolling;
 
-    // Listen for scroll events
-    target.addEventListener(
-      "scroll",
-      function (event) {
-        // Clear our timeout throughout the scroll
-        window.clearTimeout(isScrolling);
-        // Set a timeout to run after scrolling ends
-        isScrolling = setTimeout(function () {
-          // Run the callback
-          _this.reSetScrollEvent(target);
-          console.log("Scrolling has stopped.");
-        }, 66);
-      },
-      false
-    );
-  }
-  // ----------------------------
-  // スクロール終了検知したら再度スクロールイベントを付与する
-  // ----------------------------
-  reSetScrollEvent(target) {
-    const _this = this;
-    if (target.classList.contains("fixedTable-br-wrap")) {
-      console.log(target);
-      this.topRightTableWrap.removeEventListener("scroll", this.doScrollLink);
-      this.bottomLeftTableWrap.removeEventListener("scroll", this.doScrollLink);
+    // ----------------------------
+    // 縦横スクロールのスクロールイベントを破棄
+    // this => コンストラクタ
+    // ----------------------------
+    function removeScrollEvent(targetEl) {
+      if (targetEl.classList.contains("fixedTable-br-wrap")) {
+        _this.topRightTableWrap.removeEventListener("scroll", doScrollLink);
+        _this.bottomLeftTableWrap.removeEventListener("scroll", doScrollLink);
+        console.log("remove");
+      } else if (targetEl.classList.contains("fixedTable-tr-wrap")) {
+        _this.bottomRightTableWrap.removeEventListener("scroll", doScrollLink);
+      } else if (targetEl.classList.contains("fixedTable-bl-wrap")) {
+        _this.bottomRightTableWrap.removeEventListener("scroll", doScrollLink);
+      }
+    }
+    // ----------------------------
+    // スクロール終了検知イベント
+    // ----------------------------
+    function scrollEnd() {
+      _this.isScrollTimerId;
+      window.clearTimeout(_this.isScrollTimerId);
+      _this.isScrollTimerId = setTimeout(function () {
+        console.log("スクロール終了");
+        reSetScrollEvent(scrollTargetEl);
+      }, 500);
+    }
+
+    // ----------------------------
+    // スクロール終了検知したら再度スクロールイベントを付与する
+    // this => イベントが発生したスクロール領域が格納されている
+    // 引数でコンストラクタを参照する（this.self）
+    // ----------------------------
+    function reSetScrollEvent(targetEl) {
+      console.log("スクロールイベント再付与");
+
+      if (targetEl.classList.contains("fixedTable-br-wrap")) {
+        _this.topRightTableWrap.addEventListener("scroll", doScrollLink);
+        _this.bottomLeftTableWrap.addEventListener("scroll", doScrollLink);
+      } else if (targetEl.classList.contains("fixedTable-tr-wrap")) {
+        _this.bottomRightTableWrap.addEventListener("scroll", doScrollLink);
+      } else if (targetEl.classList.contains("fixedTable-bl-wrap")) {
+        _this.bottomRightTableWrap.addEventListener("scroll", doScrollLink);
+      }
     }
   }
 }
