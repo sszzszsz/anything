@@ -5,6 +5,26 @@ import FixedTable from "./FixedTable";
 
 let user = new BusinessMember("taro", "yamada", "G社");
 
+
+class Footer {
+  constructor() {
+    this.init();
+  }
+  init() {
+    var footer = document.getElementById("footer");
+    this.clickHandler = this.showAlert.bind(this);
+    footer.addEventListener("click", this.clickHandler);
+  }
+  removeEvent() {
+    var footer = document.getElementById("footer");
+    footer.removeEventListener("click", this.clickHandler);
+  }
+  showAlert() {
+    alert("Button is clicked");
+    this.removeEvent();
+  }
+}
+
 window.addEventListener("load", function () {
   let tableLists = Array.from(document.getElementsByClassName("js-fixedTable"));
   let tableInstance = tableLists.map(function (table) {
@@ -13,17 +33,19 @@ window.addEventListener("load", function () {
     return item;
   });
 
-  /// クリックリスナー登録。useCaptureは true に設定
-  var footer = document.getElementById("footer");
-  footer.addEventListener("click", showAlert);
+  // /// クリックリスナー登録。useCaptureは true に設定
+  // var footer = document.getElementById("footer");
+  // footer.addEventListener("click", showAlert);
 
-  /// リスナーのコールバック関数
-  function showAlert() {
-    alert("Button is clicked");
-    removeEvent()
-  }
+  // /// リスナーのコールバック関数
+  // function showAlert() {
+  //   alert("Button is clicked");
+  //   removeEvent();
+  // }
 
-  function removeEvent() {
-    footer.removeEventListener("click", showAlert);
-  }
+  // function removeEvent() {
+  //   footer.removeEventListener("click", showAlert);
+  // }
+
+  var test = new Footer();
 });
