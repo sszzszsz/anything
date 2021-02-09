@@ -54,7 +54,7 @@ function () {
           this.wrap.classList.add("scroll-vh");
           this.colneFourTable();
           this.setFirxedColRowStyle();
-          this.setFirxedColRowEvent();
+          this.setFirxedColRowScrollEvent();
         } else if (flag === "h") {
           this.type = "h";
           this.wrap.classList.add("scroll-h");
@@ -291,8 +291,8 @@ function () {
     // ----------------------------
 
   }, {
-    key: "setFirxedColRowEvent",
-    value: function setFirxedColRowEvent() {
+    key: "setFirxedColRowScrollEvent",
+    value: function setFirxedColRowScrollEvent() {
       var _this = this;
 
       var scrollTargetEl;
@@ -332,9 +332,7 @@ function () {
 
 
       function scrollStart(target) {
-        if (_this.isScrolling) {
-          _this.isScrolling = true;
-        } else {
+        if (!_this.isScrolling) {
           console.log("スクロール開始");
           removeScrollEvent(target);
           _this.isScrolling = true;
@@ -350,8 +348,6 @@ function () {
           _this.topRightTableWrap.removeEventListener("scroll", doScrollLink);
 
           _this.bottomLeftTableWrap.removeEventListener("scroll", doScrollLink);
-
-          console.log("remove");
         } else if (targetEl.classList.contains("fixedTable-tr-wrap")) {
           _this.bottomRightTableWrap.removeEventListener("scroll", doScrollLink);
         } else if (targetEl.classList.contains("fixedTable-bl-wrap")) {
@@ -368,7 +364,9 @@ function () {
         _this.isScrollTimerId = setTimeout(function () {
           console.log("スクロール終了");
           reSetScrollEvent(scrollTargetEl);
-        }, 500);
+          _this.isScrollTimerId = null;
+          _this.isScrolling = false;
+        }, 100);
       } // ----------------------------
       // スクロール終了検知したら再度スクロールイベントを付与する
       // this => イベントが発生したスクロール領域が格納されている

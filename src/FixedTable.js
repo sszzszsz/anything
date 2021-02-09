@@ -38,7 +38,7 @@ export default class FixedTable {
 
         this.colneFourTable();
         this.setFirxedColRowStyle();
-        this.setFirxedColRowEvent();
+        this.setFirxedColRowScrollEvent();
       } else if (flag === "h") {
         this.type = "h";
         this.wrap.classList.add("scroll-h");
@@ -311,9 +311,9 @@ export default class FixedTable {
   // ----------------------------
   // 縦横スクロールの初回スクロールイベント付与
   // ----------------------------
-  setFirxedColRowEvent() {
+  setFirxedColRowScrollEvent() {
     const _this = this;
-    let scrollTargetEl
+    let scrollTargetEl;
     this.isScrolling = false;
     this.bottomRightTableWrap.addEventListener("scroll", doScrollLink);
     this.bottomLeftTableWrap.addEventListener("scroll", doScrollLink);
@@ -330,7 +330,7 @@ export default class FixedTable {
     // 右下スクロール時 = 右上と横スクロール、左下と縦スクロールが同期
     // ----------------------------
     function doScrollLink(event) {
-      scrollTargetEl = event.target
+      scrollTargetEl = event.target;
       scrollStart(scrollTargetEl, _this.wrap);
 
       // 右下スクロールだったら
@@ -357,9 +357,7 @@ export default class FixedTable {
     // ・スクロール初回時にスクロール破棄
     // ----------------------------
     function scrollStart(target) {
-      if (_this.isScrolling) {
-        _this.isScrolling = true;
-      } else {
+      if (!_this.isScrolling) {
         console.log("スクロール開始");
         removeScrollEvent(target);
         _this.isScrolling = true;
@@ -374,7 +372,6 @@ export default class FixedTable {
       if (targetEl.classList.contains("fixedTable-br-wrap")) {
         _this.topRightTableWrap.removeEventListener("scroll", doScrollLink);
         _this.bottomLeftTableWrap.removeEventListener("scroll", doScrollLink);
-        console.log("remove");
       } else if (targetEl.classList.contains("fixedTable-tr-wrap")) {
         _this.bottomRightTableWrap.removeEventListener("scroll", doScrollLink);
       } else if (targetEl.classList.contains("fixedTable-bl-wrap")) {
@@ -390,7 +387,9 @@ export default class FixedTable {
       _this.isScrollTimerId = setTimeout(function () {
         console.log("スクロール終了");
         reSetScrollEvent(scrollTargetEl);
-      }, 500);
+        _this.isScrollTimerId = null;
+        _this.isScrolling = false;
+      }, 100);
     }
 
     // ----------------------------
